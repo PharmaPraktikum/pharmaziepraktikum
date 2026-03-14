@@ -89,6 +89,49 @@
         align-items: center;
     }
 
+	.hamburger {
+		display: none;
+		flex-direction: column;
+		gap: 5px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.5rem;
+		z-index: 1001;
+	}
+	.hamburger span {
+		display: block;
+		width: 24px;
+		height: 2px;
+		background: var(--dark);
+		border-radius: 2px;
+		transition: all 0.3s;
+	}
+	.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+	.hamburger.open span:nth-child(2) { opacity: 0; }
+	.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+	@media (max-width: 768px) {
+		.hamburger { display: flex; }
+		.nav-tabs {
+			display: none;
+			position: absolute;
+			top: 66px;
+			left: 0; right: 0;
+			background: white;
+			border-bottom: 1px solid var(--border);
+			flex-direction: column;
+			padding: 1rem;
+			gap: 0.25rem;
+			box-shadow: 0 8px 24px rgba(42,18,16,0.08);
+			z-index: 1000;
+		}
+		.nav-tabs.mobile-open { display: flex; }
+		.nav-tab { width: 100%; text-align: left; padding: 0.75rem 1rem; }
+		.nav-dropdown { width: 100%; }
+		.dropdown-content { position: static; box-shadow: none; border: none; padding-left: 1rem; }
+	}
+
     .nav-tab.active {
         background: var(--red);
         color: white;
@@ -797,6 +840,11 @@
         .rating-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
         .sort-controls { flex-direction: column; align-items: flex-start; }
         .review-header, .job-header { flex-direction: column; gap: 1rem; }
+		input, textarea, select {
+			max-width: 100%;
+			box-sizing: border-box;
+		}
+		.container { max-width: 100%; overflow-x: hidden; }		
     }
 
     /* ── REVIEW / JOB HEADER INSIDE CARDS ── */
@@ -1198,37 +1246,43 @@
     .landing-feature-text { font-size: 0.9rem; color: var(--mid); line-height: 1.7; }
 
     /* ── HIGHLIGHT REVIEWS ── */
-    .landing-reviews-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1.5rem;
-        margin-top: 2.5rem;
-    }
+	.landing-reviews-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+		gap: 1.5rem;
+		margin-top: 2.5rem;
+		min-height: 280px;
+		align-items: start;
+	}
 
-    .landing-highlight-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 2rem;
-        box-shadow: 0 4px 20px rgba(42,18,16,0.06);
-        transition: transform 0.2s, box-shadow 0.2s;
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-    }
+	.landing-highlight-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border);
+		border-radius: 16px;
+		padding: 2rem;
+		box-shadow: 0 4px 20px rgba(42,18,16,0.06);
+		transition: transform 0.2s, box-shadow 0.2s, opacity 0.5s ease;
+		position: relative;
+		overflow: visible;
+		cursor: pointer;
+		will-change: transform;
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		transform: translateZ(0);
+		-webkit-font-smoothing: subpixel-antialiased;
+	}
 
-    .landing-highlight-card::before {
-        content: '❝';
-        position: absolute;
-        top: 0.75rem; right: 1.25rem;
-        font-size: 4rem;
-        font-family: 'Fraunces', serif;
-        color: var(--red-light);
-        line-height: 1;
-        pointer-events: none;
-    }
+	.landing-highlight-card.fading {
+		opacity: 0;
+		transform: translateY(6px);
+	}
 
-    .landing-highlight-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(42,18,16,0.1); }
+	.landing-highlight-card::before {
+		content: '';
+	}
+
+	.landing-highlight-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(42,18,16,0.12); }
+	.landing-highlight-card * { transition: none !important; transform: none !important; }
 
     .lhc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
     .lhc-company { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); letter-spacing: -0.01em; margin-bottom: 0.2rem; }
@@ -1364,17 +1418,20 @@
     <div class="header">
         <div class="nav">
             <div class="logo" onclick="showSection('landing')" style="cursor: pointer;">PharmaFaro</div>
-			<div class="nav-tabs">
-				<button class="nav-tab" onclick="showSection('search')">Bewertungen durchsuchen</button>
-				<button class="nav-tab" onclick="showSection('write')">Bewertung schreiben</button>
-				<button class="nav-tab" onclick="showSection('jobs')">Stellenangebote</button>
+			<button class="hamburger" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menü">
+				<span></span><span></span><span></span>
+			</button>
+			<div class="nav-tabs" id="nav-tabs">
+				<button class="nav-tab" onclick="showSection('search');closeMobileMenu()">Bewertungen durchsuchen</button>
+				<button class="nav-tab" onclick="showSection('write');closeMobileMenu()">Bewertung schreiben</button>
+				<button class="nav-tab" onclick="showSection('jobs');closeMobileMenu()">Stellenangebote</button>
 				<div class="nav-dropdown">
 					<button class="nav-tab" id="wissenswert-tab" onclick="showSection('wissenswert')">Wissenswert ▾</button>
 					<div class="dropdown-content" id="wissenswert-dropdown">
-						<a href="#" onclick="event.preventDefault(); const dd = document.querySelector('.nav-dropdown'); dd.classList.add('clicked'); setTimeout(() => dd.classList.remove('clicked'), 100); showSection('company-search'); return false;">Unternehmen suchen</a>
-						<a href="#" onclick="event.preventDefault(); const dd = document.querySelector('.nav-dropdown'); dd.classList.add('clicked'); setTimeout(() => dd.classList.remove('clicked'), 100); showSection('awarded-companies'); return false;">Ausgezeichnete Unternehmen</a>
-						<a href="#" onclick="event.preventDefault(); const dd = document.querySelector('.nav-dropdown'); dd.classList.add('clicked'); setTimeout(() => dd.classList.remove('clicked'), 100); showSection('internship-guide'); return false;">Praktikumsleitfaden</a>
-						<a href="#" onclick="event.preventDefault(); const dd = document.querySelector('.nav-dropdown'); dd.classList.add('clicked'); setTimeout(() => dd.classList.remove('clicked'), 100); showSection('internship-tips'); return false;">Tipps zur Praktikumssuche</a>
+						<a href="#" onclick="event.preventDefault(); const dd = document.querySelector('.nav-dropdown'); dd.classList.add('clicked'); setTimeout(() => dd.classList.remove('clicked'), 100); showSection('company-search'); closeMobileMenu(); return false;">Unternehmen suchen</a>
+						<a href="#" onclick="event.preventDefault(); const dd = document.querySelector('.nav-dropdown'); dd.classList.add('clicked'); setTimeout(() => dd.classList.remove('clicked'), 100); showSection('awarded-companies'); closeMobileMenu(); return false;">Ausgezeichnete Unternehmen</a>
+						<a href="#" onclick="event.preventDefault(); const dd = document.querySelector('.nav-dropdown'); dd.classList.add('clicked'); setTimeout(() => dd.classList.remove('clicked'), 100); showSection('internship-guide'); closeMobileMenu(); return false;">Praktikumsleitfaden</a>
+						<a href="#" onclick="event.preventDefault(); const dd = document.querySelector('.nav-dropdown'); dd.classList.add('clicked'); setTimeout(() => dd.classList.remove('clicked'), 100); showSection('internship-tips'); closeMobileMenu(); return false;">Tipps zur Praktikumssuche</a>
 					</div>
 				</div>
 			</div>
@@ -8528,7 +8585,7 @@
 
 				const { data: reviews, error } = await sb
 					.from('reviews')
-					.select('company_name, state, category, ratings, highlights, address')
+					.select('company_name, state, category, ratings, highlights, feedback, tasks, address')
 					.eq('status', 'active')
 					.order('created_at', { ascending: false })
 					.limit(100);
@@ -8555,29 +8612,109 @@
 				const esc = s => s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
 				const stars = n => { const f = Math.round(n); return '★'.repeat(f) + '☆'.repeat(5-f); };
 
-				container.innerHTML = scored.map(r => {
-					const city = r.address ? (r.address.split(',').pop() || '').trim() || r.state : r.state;
-					const score = r.avgRating.toFixed(1);
-					const text = r.highlights && r.highlights.length > 280 ? r.highlights.substring(0, 280).trimEnd() + '…' : (r.highlights || '');
-					return `<div class="landing-highlight-card" onclick="(function(){ showSection('search'); setTimeout(function(){ var inp=document.getElementById('company-name-filter'); if(inp) inp.value='${r.company_name.replace(/'/g,"\\'")}'; var loc=document.getElementById('location-filter'); if(loc) loc.value='${(r.address||'').split(',').pop().trim().replace(/'/g,"\\'")}'; var sal=document.getElementById('salary-filter'); if(sal) sal.value='${r.salary||''}'; var cat=document.getElementById('category-filter'); if(cat) cat.value='${r.category||''}'; minRatingFilter=Math.floor(${r.avgRating}); document.querySelectorAll('#min-rating-filter .star').forEach(function(s,i){ i<minRatingFilter ? s.classList.add('filled') : s.classList.remove('filled'); }); autoApplyFilters(); },300); })()">
-						<div class="lhc-top">
-							<div>
-								<div class="lhc-company">${esc(r.company_name)}</div>
-								<div class="lhc-meta">${esc(city)}${r.category ? ' · ' + (catMap[r.category] || r.category) : ''}</div>
-							</div>
-							<div class="lhc-score">
-								<span class="lhc-score-num">${score}</span>
-								<span class="lhc-score-max">von 5</span>
-							</div>
-						</div>
-						<div class="lhc-stars">${stars(r.avgRating)}</div>
-						${r.highlights && r.highlights.trim().length > 10 ? `<p class="lhc-text">${esc(text)}</p>` : ''}
-					</div>`;
-				}).join('');
+				const renderCards = (list) => {
+					const MAX_CHARS = 220;
+					const doRender = () => {
+						container.innerHTML = list.map(r => {
+							const city = r.address ? (r.address.split(',').pop() || '').trim() || r.state : r.state;
+							const score = r.avgRating.toFixed(1);
+							const starsFilled = Math.round(r.avgRating);
+							const starsHtml = Array.from({length: 5}, (_, i) =>
+								`<span style="color:${i < starsFilled ? 'var(--red)' : 'var(--border-strong)'}; font-size:1rem;">★</span>`
+							).join('');
+							const fullText = (r.highlights || '').trim();
+							const feedbackText = (r.feedback || '').trim();
+							const tasksText = (r.tasks || '').trim();
+							const truncated = fullText.length > MAX_CHARS;
+							const displayText = truncated ? fullText.substring(0, MAX_CHARS).trimEnd() + '…' : fullText;
+							return `<div class="landing-highlight-card" style="display:flex;flex-direction:column;min-height:260px;" onclick="(function(){ showSection('search'); setTimeout(function(){ var inp=document.getElementById('company-name-filter'); if(inp) inp.value='${r.company_name.replace(/'/g,"\\'")}'; var loc=document.getElementById('location-filter'); if(loc) loc.value='${(r.address||'').split(',').pop().trim().replace(/'/g,"\\'")}'; var sal=document.getElementById('salary-filter'); if(sal) sal.value='${r.salary||''}'; var cat=document.getElementById('category-filter'); if(cat) cat.value='${r.category||''}'; minRatingFilter=Math.floor(${r.avgRating}); document.querySelectorAll('#min-rating-filter .star').forEach(function(s,i){ i<minRatingFilter ? s.classList.add('filled') : s.classList.remove('filled'); }); autoApplyFilters(); },300); })()">
+								<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
+									<div>
+										<div style="font-family:'DM Sans',sans-serif; font-size:1.05rem; font-weight:600; color:var(--dark); margin-bottom:0.2rem;">${esc(r.company_name)}</div>
+										<div style="font-size:0.82rem; color:var(--mid); margin-bottom:0.4rem;">${esc(city)}</div>
+										<span style="background:var(--dark);color:rgba(253,248,245,0.9);padding:0.2rem 0.65rem;border-radius:999px;font-size:0.75rem;font-weight:600;">${catMap[r.category] || r.category || ''}</span>
+									</div>
+									<div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0; margin-left:0.75rem;">
+										<div style="font-weight:700; font-size:1.75rem; color:var(--dark); line-height:1;">${score}</div>
+										<div style="display:flex; gap:2px; margin-top:0.3rem;">${starsHtml}</div>
+									</div>
+								</div>
+								${(() => {
+									const feedbackText = (r.feedback||'').trim();
+									const tasksText = (r.tasks||'').trim();
+									const textContent = fullText.length > 0 ? fullText : (feedbackText.length > 0 ? feedbackText : tasksText);
+									const label = fullText.length > 0 ? 'Besonders Hervorzuheben:' : (feedbackText.length > 0 ? 'Lob/Kritik:' : 'Absolvierte Aufgaben:');
+									const t = textContent.trim();
+									if (t.length === 0) return '';
+									const trunc = t.length > MAX_CHARS;
+									const disp = trunc ? t.substring(0, MAX_CHARS).trimEnd() + '…' : t;
+									return `<div style="flex:1; padding-top:0.6rem; border-top:1px solid var(--border);">
+										<div style="font-weight:600; color:var(--dark); margin-bottom:0.25rem; font-size:0.85rem;">${label}</div>
+										<div style="color:var(--mid); font-family:'DM Sans',sans-serif; font-size:0.9rem; line-height:1.65;">${esc(disp)}${trunc ? `<span style="color:var(--red);font-weight:600;"> Mehr anzeigen…</span>` : ''}</div>
+									</div>`;
+								})()}
+							</div>`;
+						}).join('');
+						requestAnimationFrame(() => {
+							container.querySelectorAll('.landing-highlight-card').forEach(c => {
+								c.style.opacity = '0';
+								c.style.transform = 'translateY(6px)';
+								requestAnimationFrame(() => {
+									c.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+									c.style.opacity = '1';
+									c.style.transform = 'translateY(0)';
+									setTimeout(() => {
+										c.style.transition = '';
+										c.style.transform = '';
+										c.style.opacity = '';
+									}, 600);
+								});
+							});
+						});
+					};
+					const cards = container.querySelectorAll('.landing-highlight-card');
+					if (cards.length > 0) {
+						cards.forEach(c => { c.style.transition = 'opacity 0.4s ease'; c.style.opacity = '0'; c.style.transform = ''; });
+						setTimeout(doRender, 420);
+					} else {
+						doRender();
+					}
+				};
+
+				const allEligible = reviews.filter(r => {
+					const vals = Object.values(r.ratings || {}).filter(v => typeof v === 'number');
+					const avg = vals.length > 0 ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+					return avg >= 3;
+				}).map(r => {
+					const vals = Object.values(r.ratings || {}).filter(v => typeof v === 'number');
+					const avg = vals.length > 0 ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+					return { ...r, avgRating: avg };
+				});
+
+				renderCards(scored);
+
+				if (allEligible.length > 3) {
+					setInterval(() => {
+						const next = [...allEligible].sort(() => Math.random() - 0.5).slice(0, 3);
+						renderCards(next);
+					}, 15000);
+				}
 
 			} catch (e) {
 				renderLandingFallback();
 			}
+		}
+
+		function toggleMobileMenu() {
+			const btn = document.getElementById('hamburger-btn');
+			const tabs = document.getElementById('nav-tabs');
+			btn.classList.toggle('open');
+			tabs.classList.toggle('mobile-open');
+		}
+		
+		function closeMobileMenu() {
+			document.getElementById('hamburger-btn').classList.remove('open');
+			document.getElementById('nav-tabs').classList.remove('mobile-open');
 		}
 
 		function renderLandingFallback() {
@@ -9580,7 +9717,7 @@
 										${company.category ? `<div class="category-badge" style="margin-top:0;margin-bottom:0;display:inline-flex;align-items:center;">${getCategoryLabel(company.category)}</div>` : ''}
 										${company.averageRating > 0 ? `
 										<div style="display: flex; align-items: center; gap: 0.25rem;">
-											<div class="stars" style="font-size: 0.9rem;">${generateStarHTML(Math.round(company.averageRating))}</div>
+											<div class="stars" style="font-size: 0.9rem; margin-top:0;">${generateStarHTML(Math.round(company.averageRating))}</div>
 											<span style="font-size: 0.9rem;">(${company.reviews.length})</span>
 										</div>` : '<span style="color:#aaa;font-size:0.85rem;">Noch keine Bewertungen</span>'}
 									</div>
