@@ -1555,7 +1555,13 @@
 		
 		.job-create-btn-mobile { display: block !important; width: 100% !important; margin: 0.75rem 0 !important; }
 
-		#company-section [style*="position: absolute; top: -20px; right: -20px"] { top: 0 !important; right: 0 !important; transform: translate(30%, -30%) !important; }
+		#company-section [style*="position: absolute; top: -20px; right: -20px"] { top: -10px !important; right: 5px !important; transform: none !important; }
+		#company-section [style*="position: absolute; top: -15px; right: -15px"] { top: -10px !important; right: 5px !important; transform: none !important; }
+
+		#company-section [style*="position: absolute; top: -15px; right: -15px"] { top: -10px !important; right: 10px !important; }
+
+		#company-section [style*="padding: 1rem 2rem; background: #f8f9fa"] span { display: block; margin-bottom: 0.75rem !important; }
+		#company-section [style*="padding: 1rem 2rem; background: #f8f9fa"] .btn { margin-left: 0 !important; width: 100% !important; }
 	}
 
     @media (max-width: 380px) {
@@ -5259,14 +5265,12 @@
 				</div>
 
 				<!-- Verifizierte Unternehmensinformationen (NUR wenn verified=true) -->
-				${company.verified && (company.description || company.contactPerson || company.contactEmail || company.phone) ? `
+				${company.verified ? `
 				<div style="margin-bottom: 2rem; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(42,18,16,0.06);">
-					${company.description ? `
 					<div style="margin-bottom: 2rem;">
 						<h3 style="margin-top: 0; margin-bottom: 1rem; color: #333;">Über uns</h3>
-						<p style="margin: 0; line-height: 1.8; color: #555; white-space: pre-wrap;">${company.description}</p>
+						<p style="margin: 0; line-height: 1.8; color: #555; white-space: pre-wrap;">${company.description || 'Dieses Unternehmen hat noch keine eigene Beschreibung hinzugefügt.'}</p>
 					</div>
-					` : ''}
 				</div>
 				` : ''}
 
@@ -5280,14 +5284,6 @@
 						<button class="btn btn-secondary" onclick="showVerificationModal('${company.name}')" style="margin-left: 1rem;">Unternehmen verifizieren</button>
 					`}
 				</div>
-
-				${company.bphdAwards && company.bphdAwards.length > 0 ? `
-				<div style="position: absolute; top: -15px; right: -15px; cursor: pointer; z-index: 5;" onclick="showBphdAwardsModal('${company.name}')">
-					<div style="width: 80px; height: 80px; background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); transition: transform 0.3s ease;">
-						<span style="font-size: 1.8rem; font-weight: bold; color: white;">BPhD</span>
-					</div>
-				</div>
-				` : ''}
 
 				<!-- Bewertungsbereich -->
 				<div style="margin-bottom: 3rem; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(42,18,16,0.06);">
@@ -5735,6 +5731,18 @@
 			const container = document.getElementById('search-suggestions');
 			const background = document.getElementById('search-suggestions-bg');
 			container.innerHTML = '';
+			
+			// Mobile: container aus Hero herauslösen und an body hängen
+			if (window.innerWidth <= 600) {
+				const input = document.getElementById('company-search');
+				const rect = input.getBoundingClientRect();
+				container.style.position = 'fixed';
+				container.style.top = (rect.bottom + window.scrollY) + 'px';
+				container.style.left = rect.left + 'px';
+				container.style.width = rect.width + 'px';
+				container.style.zIndex = '99999';
+				document.body.appendChild(container);
+			}			
 			
 			if (suggestions.length === 0) {
 				const div = document.createElement('div');
@@ -8891,7 +8899,7 @@
 			const dd = document.querySelector('.nav-dropdown');
 			if (!tabs.classList.contains('mobile-open')) {
 				dd?.classList.remove('mobile-sub-open');
-				if (wt) wt.innerHTML = 'Wissenswert &#9660;';
+				if (wt) wt.textContent = 'Wissenswert ▾';
 			} else {
 				// Beim Öffnen: Pfeil entsprechend aktuellem Untermenü-Status setzen
 				const isSubOpen = dd?.classList.contains('mobile-sub-open');
