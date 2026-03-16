@@ -8917,11 +8917,10 @@
 		}
 		
 		function toggleWissenswertMobile() {
+			const dd = document.querySelector('.nav-dropdown');
+			const wt = document.getElementById('wissenswert-tab');
 			const navTabs = document.getElementById('nav-tabs');
-			const isMobile = window.innerWidth <= 600;
-			if (isMobile) {
-				const dd = document.querySelector('.nav-dropdown');
-				const wt = document.getElementById('wissenswert-tab');
+			if (navTabs && getComputedStyle(navTabs).display !== 'none') {
 				const wasOpen = dd.classList.contains('mobile-sub-open');
 				dd.classList.toggle('mobile-sub-open');
 				if (wt) wt.textContent = wasOpen ? 'Wissenswert ▾' : 'Wissenswert ▴';
