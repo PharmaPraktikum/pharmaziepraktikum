@@ -1584,7 +1584,7 @@
 				<button class="nav-tab" onclick="showSection('write');closeMobileMenu()">Bewertung schreiben</button>
 				<button class="nav-tab" onclick="showSection('jobs');closeMobileMenu()">Stellenangebote</button>
 				<div class="nav-dropdown">
-					<button class="nav-tab" id="wissenswert-tab" onclick="toggleWissenswertMobile()">Wissenswert ▾</button>
+					<button class="nav-tab" id="wissenswert-tab" data-open="false" onclick="toggleWissenswertMobile()">Wissenswert ▾</button>
 					<div class="dropdown-content" id="wissenswert-dropdown">
 						<a href="#" onclick="event.preventDefault(); showSection('company-search'); closeMobileMenu(); return false;">Unternehmen suchen</a>
 						<a href="#" onclick="event.preventDefault(); showSection('awarded-companies'); closeMobileMenu(); return false;">Ausgezeichnete Unternehmen</a>
@@ -8919,14 +8919,11 @@
 		function toggleWissenswertMobile() {
 			const dd = document.querySelector('.nav-dropdown');
 			const wt = document.getElementById('wissenswert-tab');
-			const navTabs = document.getElementById('nav-tabs');
-			if (navTabs && getComputedStyle(navTabs).display !== 'none') {
-				const wasOpen = dd.classList.contains('mobile-sub-open');
-				dd.classList.toggle('mobile-sub-open');
-				if (wt) wt.textContent = wasOpen ? 'Wissenswert ▾' : 'Wissenswert ▴';
-			} else {
-				showSection('wissenswert');
-			}
+			if (window.innerWidth > 600) { showSection('wissenswert'); return; }
+			const isOpen = wt.getAttribute('data-open') === 'true';
+			dd.classList.toggle('mobile-sub-open');
+			wt.setAttribute('data-open', !isOpen);
+			wt.textContent = isOpen ? 'Wissenswert ▾' : 'Wissenswert ▴';
 		}
 
 		function renderLandingFallback() {
