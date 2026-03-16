@@ -1555,8 +1555,7 @@
 		
 		.job-create-btn-mobile { display: block !important; width: 100% !important; margin: 0.75rem 0 !important; }
 
-		#company-section [style*="position: absolute; top: -20px; right: -20px"] { top: -10px !important; right: 5px !important; transform: none !important; }
-		#company-section [style*="position: absolute; top: -15px; right: -15px"] { top: -10px !important; right: 5px !important; transform: none !important; }
+		#company-section [style*="position: absolute; top: -20px; right: -20px"] { top: 0.5rem !important; right: 0.5rem !important; transform: none !important; }
 
 		#company-section [style*="position: absolute; top: -15px; right: -15px"] { top: -10px !important; right: 10px !important; }
 
@@ -8901,9 +8900,8 @@
 				dd?.classList.remove('mobile-sub-open');
 				if (wt) wt.textContent = 'Wissenswert ▾';
 			} else {
-				// Beim Öffnen: Pfeil entsprechend aktuellem Untermenü-Status setzen
 				const isSubOpen = dd?.classList.contains('mobile-sub-open');
-				if (wt) wt.textContent = 'Wissenswert ▾';
+				if (wt) wt.textContent = isSubOpen ? 'Wissenswert ▴' : 'Wissenswert ▾';
 			}
 		}
 		
