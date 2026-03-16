@@ -1463,7 +1463,7 @@
 		/* ── UNTERNEHMENSSEITE ── */
 		.company-section-header { padding: 1rem !important; }
 		.company-section-header > div[style*="display: flex"] { flex-direction: column !important; align-items: center !important; text-align: center; gap: 0.75rem !important; }
-		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] { flex-direction: column !important; align-items: center !important; text-align: center !important; }
+		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] { flex-direction: column !important; align-items: center !important; text-align: center !important; width: 100% !important; }
 		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] img { width: 100px !important; height: 100px !important; margin: 0 auto !important; flex-shrink: 0 !important; }
 		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] > div { width: 100% !important; }
 		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] h1 { font-size: 1.4rem !important; text-align: center !important; }
@@ -1556,12 +1556,16 @@
 		
 		.job-create-btn-mobile { display: block !important; width: 100% !important; margin: 0.75rem 0 !important; }
 
-		.bphd-badge-container { position: absolute !important; top: -15px !important; right: -15px !important; z-index: 10 !important; }
+		.bphd-badge-container { position: absolute !important; top: -15px !important; right: 0 !important; z-index: 10 !important; }
 
 		#company-section [style*="position: absolute; top: -15px; right: -15px"] { top: -10px !important; right: 10px !important; }
 
 		#company-section [style*="padding: 1rem 2rem; background: #f8f9fa"] span { display: block; margin-bottom: 0.75rem !important; }
 		#company-section [style*="padding: 1rem 2rem; background: #f8f9fa"] .btn { margin-left: 0 !important; width: 100% !important; }
+
+		.nav-dropdown { position: relative !important; }
+		.nav-dropdown .nav-tab { text-align: left !important; }
+		.nav-dropdown { display: block !important; }
 	}
 
     @media (max-width: 380px) {
@@ -8922,8 +8926,8 @@
 			if (!window.matchMedia('(max-width: 600px)').matches) { showSection('wissenswert'); return; }
 			const isOpen = wt.getAttribute('data-open') === 'true';
 			dd.classList.toggle('mobile-sub-open');
-			wt.setAttribute('data-open', !isOpen);
-			wt.textContent = isOpen ? 'Wissenswert ▾' : 'Wissenswert ▴';
+			wt.setAttribute('data-open', isOpen ? 'false' : 'true');
+			wt.innerHTML = isOpen ? 'Wissenswert ▾' : 'Wissenswert <span style="display:inline-block;transform:scaleY(-1);font-size:inherit;">▾</span>';
 		}
 
 		function renderLandingFallback() {
