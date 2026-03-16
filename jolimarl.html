@@ -1536,10 +1536,11 @@
 		#all-companies-container [style*="display: flex; align-items: center; gap: 0.5rem"] { flex-wrap: wrap !important; align-items: baseline !important; }
 		#all-companies-container h4 { display: inline !important; font-size: 1.05rem !important; }
 		#all-companies-container [style*="display: flex; align-items: center; gap: 0.5rem"] { display: inline !important; }
-		#all-companies-container .verified-badge { display: inline-flex !important; vertical-align: middle !important; }
+		#all-companies-container .verified-badge { display: inline-flex !important; vertical-align: middle !important; align-items: center !important; position: relative !important; top: -1px !important; }
 		#all-companies-container [style*="margin-top: 0.4rem"] { gap: 0 !important; }
 		#all-companies-container .category-badge { margin-bottom: 0.5rem !important; }
 		#all-companies-container [style*="display: flex; align-items: center; gap: 0.25rem"] { margin-top: 0.35rem !important; margin-bottom: 0.35rem !important; }
+		#all-companies-container [style*="background: #d4edda"] { margin-top: 0.35rem !important; }
 
 		.job-create-btn-mobile { display: none; }
 
@@ -1547,8 +1548,14 @@
 		#search-suggestions { z-index: 9999 !important; position: absolute !important; }
 
 		.checkbox-group { grid-template-columns: 1fr !important; }
-		#jobs-section .search-filters > div:first-child { display: block !important; }
+		#jobs-section .search-filters > div:first-child { display: block !important; margin-bottom: 0 !important; }
+		#jobs-section .search-filters > div:first-child h2 { margin-bottom: 0 !important; }
+		.job-create-btn { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
 		.overall-rating[style*="transform: scale(1.2)"] { transform: scale(1) !important; }
+		
+		.job-create-btn-mobile { display: block !important; width: 100% !important; margin: 0.75rem 0 !important; }
+
+		#company-section [style*="position: absolute; top: -20px; right: -20px"] { top: 0 !important; right: 0 !important; transform: translate(30%, -30%) !important; }
 	}
 
     @media (max-width: 380px) {
@@ -1600,7 +1607,7 @@
 				<input type="text" id="company-search" placeholder="Nach Unternehmen suchen" 
 					   style="width: 100%; padding: 1rem 1.5rem; border: 1.5px solid rgba(255,255,255,0.3); border-radius: 10px; font-size: 1.1rem; text-align: center; background: white; position: relative; z-index: 101;"
 					   oninput="searchCompanies(this.value)" 
-					   onfocus="this.select(); showSearchSuggestions()"
+					   onfocus="this.select(); showSearchSuggestions(); this.parentElement.style.overflow='visible'; this.parentElement.style.background='transparent';"
 					   onclick="this.select()">
 				<div id="search-suggestions" style="position: absolute; top: 100%; left: 0; right: 0; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); max-height: 400px; overflow-y: auto; z-index: 1000; display: none; border: 1px solid #ddd;">
 					<!-- Vorschläge werden hier eingefügt -->
@@ -8389,16 +8396,25 @@
 				fileDisplay.textContent = this.files[0].name;
 				if (window.innerWidth <= 600) {
 					const removeBtn = document.getElementById('remove-file-btn');
-					const wrapper = document.getElementById('verification-file').parentElement;
-					fileDisplay.style.display = 'inline';
-					fileDisplay.style.width = 'auto';
-					fileDisplay.style.marginTop = '0.5rem';
+					// Dateiname in neue Zeile
 					fileDisplay.style.display = 'block';
-					if (removeBtn) { 
-						removeBtn.style.display = 'inline-block';
-						removeBtn.style.marginLeft = '0.5rem';
-						removeBtn.style.verticalAlign = 'middle';
+					fileDisplay.style.width = '100%';
+					fileDisplay.style.marginTop = '0.5rem';
+					// Wrapper auf flex setzen damit Name + Kreuz nebeneinander
+					const nameRow = document.createElement('div');
+					nameRow.style.cssText = 'display:flex; align-items:center; gap:0.5rem; margin-top:0.5rem;';
+					fileDisplay.style.display = 'inline';
+					fileDisplay.style.marginTop = '0';
+					if (removeBtn) {
+						removeBtn.style.display = 'inline-flex';
+						removeBtn.style.marginLeft = '0';
 						removeBtn.style.marginTop = '0';
+						// fileDisplay und removeBtn in nameRow verschieben
+						const parent = fileDisplay.parentElement;
+						parent.insertBefore(nameRow, fileDisplay);
+						nameRow.appendChild(fileDisplay);
+						nameRow.appendChild(removeBtn);
+						removeBtn.style.display = 'inline-flex';
 					}
 				}
 				removeBtn.style.display = 'inline-block';
@@ -8879,7 +8895,7 @@
 			} else {
 				// Beim Öffnen: Pfeil entsprechend aktuellem Untermenü-Status setzen
 				const isSubOpen = dd?.classList.contains('mobile-sub-open');
-				if (wt) wt.innerHTML = isSubOpen ? 'Wissenswert <span style="display:inline-block;transform:scaleY(-1);">&#9660;</span>' : 'Wissenswert &#9660;';
+				if (wt) wt.textContent = 'Wissenswert ▾';
 			}
 		}
 		
@@ -8890,7 +8906,7 @@
 			if (tabs) tabs.classList.remove('mobile-open');
 			document.querySelector('.nav-dropdown')?.classList.remove('mobile-sub-open');
 			const wt = document.getElementById('wissenswert-tab');
-			if (wt) wt.innerHTML = 'Wissenswert &#9660;';
+			if (wt) wt.textContent = 'Wissenswert ▾';
 		}
 		
 		function toggleWissenswertMobile() {
@@ -8899,9 +8915,9 @@
 			if (isMobile) {
 				const dd = document.querySelector('.nav-dropdown');
 				const wt = document.getElementById('wissenswert-tab');
-				const isOpen = dd.classList.contains('mobile-sub-open');
+				const wasOpen = dd.classList.contains('mobile-sub-open');
 				dd.classList.toggle('mobile-sub-open');
-				if (wt) wt.innerHTML = isOpen ? 'Wissenswert &#9660;' : 'Wissenswert <span style="display:inline-block;transform:scaleY(-1);">&#9660;</span>';
+				if (wt) wt.textContent = wasOpen ? 'Wissenswert ▾' : 'Wissenswert ▴';
 			} else {
 				showSection('wissenswert');
 			}
