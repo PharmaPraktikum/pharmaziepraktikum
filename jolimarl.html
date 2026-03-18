@@ -2623,93 +2623,92 @@
 								</div>
 							</div>	
 						</div>
-					</div>
-
-					<!-- Spezialisierungen für Offizin -->
-					<div class="form-group" id="job-specializations-field" style="display: none;">
-						<label>Spezialisierungen</label>
-						<div class="checkbox-group">
-							<label><input type="checkbox" value="sterilherstellung"> Sterilherstellung</label>
-							<label><input type="checkbox" value="verblisterung"> Verblisterung</label>
-							<label><input type="checkbox" value="versandhandel"> Versandhandel</label>
-							<label><input type="checkbox" value="heimversorgung"> Heimversorgung</label>
-							<label><input type="checkbox" value="klinikversorgung"> Klinikversorgung</label>
-							<label><input type="checkbox" value="homoeopathie"> Homöopathie</label>
-							<label><input type="checkbox" value="ernaehrungsberatung"> Ernährungsberatung</label>
-							<label><input type="checkbox" value="sonstige" id="job-spec-sonstige"> Sonstige</label>
-						</div>
-						<div class="form-group" id="job-spec-sonstige-field" style="display: none; margin-top: 1rem;">
-							<input type="text" id="job-spec-sonstige-input" placeholder="Bitte andere Spezialisierungen angeben">
-						</div>
-					</div>
-
-					<div class="form-group" id="job-customer-type-field" style="display: none;">
-						<label style="font-weight: 600;">Kundschaft</label>
-						<div class="slider-container">
-							<div id="job-customer-type-buttons" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 1rem;">
-								<button type="button" class="job-customer-btn" data-value="0" style="padding: 1rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: all 0.2s;">
-									<div>Überwiegend</div>
-									<div>Stammkundschaft</div>
-								</button>
-								<button type="button" class="job-customer-btn active" data-value="1" style="padding: 1rem; border: 2px solid var(--red); border-radius: 8px; background: white; cursor: pointer; text-align: center; color: var(--red); font-weight: 600; transition: all 0.2s;">
-									<div>Gemischte</div>
-									<div>Kundschaft</div>
-								</button>
-								<button type="button" class="job-customer-btn" data-value="2" style="padding: 1rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: all 0.2s;">
-									<div>Überwiegend</div>
-									<div>Laufkundschaft</div>
-								</button>
-							</div>
-							<input type="hidden" id="job-customer-type-value" value="1">
-						</div>
-					</div>
-
-					<!-- Bereich für Industrie -->
-					<div class="form-group" id="job-industry-field" style="display: none;">
-						<label>Bereich *</label>
-						<select id="job-industry-area">
-							<option value="">Bitte wählen</option>
-							<option value="qualitaetskontrolle">Qualitätskontrolle</option>
-							<option value="qualitaetssicherung">Qualitätssicherung</option>
-							<option value="produktion">Produktion</option>
-							<option value="zulassung">Zulassung</option>
-							<option value="forschung">Forschung</option>
-							<option value="sonstige">Sonstige</option>
-						</select>
-						<div class="form-group" id="job-industry-sonstige-field" style="display: none; margin-top: 1rem;">
-							<input type="text" id="job-industry-sonstige-input" placeholder="Bitte anderen Bereich angeben">
-						</div>
-					</div>
-
-					<!-- Bereich für Universität -->
-					<div class="form-group" id="job-university-field" style="display: none;">
-						<label>Bereich *</label>
-						<select id="job-university-area">
-							<option value="">Bitte wählen</option>
-							<option value="pharmazeutische-technologie">Pharmazeutische Technologie</option>
-							<option value="medizinische-pharmazeutische-chemie">Medizinische und pharmazeutische Chemie</option>
-							<option value="pharmazeutische-biologie">Pharmazeutische Biologie</option>
-							<option value="pharmakologie-klinische-pharmazie">Pharmakologie/Klinische Pharmazie</option>
-							<option value="pharmaziegeschichte">Pharmaziegeschichte</option>
-						</select>
-					</div>
-							
-					<div class="form-section">
-						<label>Benefits</label>
-						<div class="form-group">
+						<!-- Spezialisierungen für Offizin -->
+						<div class="form-group" id="job-specializations-field" style="display: none;">
+							<label>Spezialisierungen</label>
 							<div class="checkbox-group">
-								<label><input type="checkbox" value="wohnung"> Wohnung</label>
-								<label><input type="checkbox" value="sonderzahlungen"> Sonderzahlungen</label>
-								<label><input type="checkbox" value="fortbildung"> Fort- und Weiterbildungsangebot</label>
-								<label><input type="checkbox" value="kantine"> Kantine</label>
-								<label><input type="checkbox" value="diplomarbeit"> Diplomarbeit</label>
-								<label><input type="checkbox" value="homeoffice"> Homeoffice</label>
-								<label><input type="checkbox" value="sonstige" id="job-benefits-sonstige"> Sonstige</label>
+								<label><input type="checkbox" value="sterilherstellung"> Sterilherstellung</label>
+								<label><input type="checkbox" value="verblisterung"> Verblisterung</label>
+								<label><input type="checkbox" value="versandhandel"> Versandhandel</label>
+								<label><input type="checkbox" value="heimversorgung"> Heimversorgung</label>
+								<label><input type="checkbox" value="klinikversorgung"> Klinikversorgung</label>
+								<label><input type="checkbox" value="homoeopathie"> Homöopathie</label>
+								<label><input type="checkbox" value="ernaehrungsberatung"> Ernährungsberatung</label>
+								<label><input type="checkbox" value="sonstige" id="job-spec-sonstige"> Sonstige</label>
 							</div>
-							<div class="form-group" id="job-benefits-sonstige-field" style="display: none; margin-top: 1rem;">
-								<textarea id="job-benefits-sonstige-input" placeholder="Bitte andere Benefits angeben"></textarea>
+							<div class="form-group" id="job-spec-sonstige-field" style="display: none; margin-top: 1rem;">
+								<input type="text" id="job-spec-sonstige-input" placeholder="Bitte andere Spezialisierungen angeben">
 							</div>
 						</div>
+	
+						<div class="form-group" id="job-customer-type-field" style="display: none;">
+							<label style="font-weight: 600;">Kundschaft</label>
+							<div class="slider-container">
+								<div id="job-customer-type-buttons" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 1rem;">
+									<button type="button" class="job-customer-btn" data-value="0" style="padding: 1rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: all 0.2s;">
+										<div>Überwiegend</div>
+										<div>Stammkundschaft</div>
+									</button>
+									<button type="button" class="job-customer-btn active" data-value="1" style="padding: 1rem; border: 2px solid var(--red); border-radius: 8px; background: white; cursor: pointer; text-align: center; color: var(--red); font-weight: 600; transition: all 0.2s;">
+										<div>Gemischte</div>
+										<div>Kundschaft</div>
+									</button>
+									<button type="button" class="job-customer-btn" data-value="2" style="padding: 1rem; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: all 0.2s;">
+										<div>Überwiegend</div>
+										<div>Laufkundschaft</div>
+									</button>
+								</div>
+								<input type="hidden" id="job-customer-type-value" value="1">
+							</div>
+						</div>
+	
+						<!-- Bereich für Industrie -->
+						<div class="form-group" id="job-industry-field" style="display: none;">
+							<label>Bereich *</label>
+							<select id="job-industry-area">
+								<option value="">Bitte wählen</option>
+								<option value="qualitaetskontrolle">Qualitätskontrolle</option>
+								<option value="qualitaetssicherung">Qualitätssicherung</option>
+								<option value="produktion">Produktion</option>
+								<option value="zulassung">Zulassung</option>
+								<option value="forschung">Forschung</option>
+								<option value="sonstige">Sonstige</option>
+							</select>
+							<div class="form-group" id="job-industry-sonstige-field" style="display: none; margin-top: 1rem;">
+								<input type="text" id="job-industry-sonstige-input" placeholder="Bitte anderen Bereich angeben">
+							</div>
+						</div>
+	
+						<!-- Bereich für Universität -->
+						<div class="form-group" id="job-university-field" style="display: none;">
+							<label>Bereich *</label>
+							<select id="job-university-area">
+								<option value="">Bitte wählen</option>
+								<option value="pharmazeutische-technologie">Pharmazeutische Technologie</option>
+								<option value="medizinische-pharmazeutische-chemie">Medizinische und pharmazeutische Chemie</option>
+								<option value="pharmazeutische-biologie">Pharmazeutische Biologie</option>
+								<option value="pharmakologie-klinische-pharmazie">Pharmakologie/Klinische Pharmazie</option>
+								<option value="pharmaziegeschichte">Pharmaziegeschichte</option>
+							</select>
+						</div>
+								
+						<div class="form-section">
+							<label>Benefits</label>
+							<div class="form-group">
+								<div class="checkbox-group">
+									<label><input type="checkbox" value="wohnung"> Wohnung</label>
+									<label><input type="checkbox" value="sonderzahlungen"> Sonderzahlungen</label>
+									<label><input type="checkbox" value="fortbildung"> Fort- und Weiterbildungsangebot</label>
+									<label><input type="checkbox" value="kantine"> Kantine</label>
+									<label><input type="checkbox" value="diplomarbeit"> Diplomarbeit</label>
+									<label><input type="checkbox" value="homeoffice"> Homeoffice</label>
+									<label><input type="checkbox" value="sonstige" id="job-benefits-sonstige"> Sonstige</label>
+								</div>
+								<div class="form-group" id="job-benefits-sonstige-field" style="display: none; margin-top: 1rem;">
+									<textarea id="job-benefits-sonstige-input" placeholder="Bitte andere Benefits angeben"></textarea>
+								</div>
+							</div>
+						</div>					
 					</div>
 
 					<hr style="border: none; border-top: 1px solid #ddd; margin: 2.5rem 0;">
@@ -7288,7 +7287,7 @@
 							${reviewData.specializations ? `<p>Spezialisierungen: ${reviewData.specializations}</p>` : ''}
 							${reviewData.area ? `<p>Bereich: ${reviewData.area}</p>` : ''}
                         </div>
-						<div style="text-align: center; padding-top: 0;">
+						<div style="text-align: center; padding-top: 1rem;">
                             <div class="overall-rating" style="transform: scale(1.2); margin-top: 0;">
                                 <div class="rating-number">${overallRating.toFixed(1)}</div>
                                 <div class="stars">${generateStarHTML(Math.round(overallRating))}</div>
