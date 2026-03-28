@@ -869,7 +869,7 @@
 	.review-header, .job-header {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 1rem;
         position: relative;
     }
@@ -1533,7 +1533,8 @@
 		.job-create-btn { display: none !important; }
 
 		#all-companies-container [style*="display: flex; align-items: center; gap: 0.5rem"] { flex-wrap: wrap !important; align-items: baseline !important; }
-		#all-companies-container h4 { display: inline !important; font-size: 1.05rem !important; }
+		#all-companies-container h4 { display: inline !important; font-size: 1.05rem !important; font-family: 'DM Sans', sans-serif !important; }
+		#all-companies-container h4 .verified-badge { display: inline-flex !important; vertical-align: middle !important; }
 		#all-companies-container [style*="display: flex; align-items: center; gap: 0.5rem"] { display: inline !important; }
 		#all-companies-container .verified-badge { display: inline-flex !important; vertical-align: middle !important; align-items: center !important; position: relative !important; top: -1px !important; }
 		#all-companies-container [style*="margin-top: 0.4rem"] { gap: 0 !important; }
@@ -1563,8 +1564,11 @@
 		
 		.job-create-btn-mobile { display: block !important; width: 100% !important; margin-bottom: 1rem !important; padding: 1rem !important; }
 
-		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] { isolation: isolate; }
-		.bphd-badge-container { position: absolute !important; top: 0.5rem !important; right: 0.5rem !important; z-index: 10 !important; }
+		.job-header { align-items: flex-start !important; }
+		
+		#write-section button[type="submit"], #jobs-modal button[type="submit"] { display: block !important; margin: 0 auto !important; width: auto !important; min-width: 60% !important; }
+		
+
 	}
 
     @media (max-width: 380px) {
@@ -1587,12 +1591,12 @@
 				<button class="nav-tab" onclick="showSection('write');closeMobileMenu()">Bewertung schreiben</button>
 				<button class="nav-tab" onclick="showSection('jobs');closeMobileMenu()">Stellenangebote</button>
 				<div class="nav-dropdown">
-					<button class="nav-tab" id="wissenswert-tab" data-open="false" onclick="toggleWissenswertMobile()">Wissenswert '<span style="display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;vertical-align:middle;margin-left:4px;"></span>'</button>
+					<button class="nav-tab" id="wissenswert-tab" data-open="false" onclick="toggleWissenswertMobile()">Wissenswert <span style="font-size:0.7em;vertical-align:middle;">▾</span></button>
 					<div class="dropdown-content" id="wissenswert-dropdown">
-						<a href="#" onclick="event.preventDefault(); showSection('company-search'); closeMobileMenu(); return false;">Unternehmen suchen</a>
-						<a href="#" onclick="event.preventDefault(); showSection('awarded-companies'); closeMobileMenu(); return false;">Ausgezeichnete Unternehmen</a>
-						<a href="#" onclick="event.preventDefault(); showSection('internship-guide'); closeMobileMenu(); return false;">Praktikumsleitfaden</a>
-						<a href="#" onclick="event.preventDefault(); showSection('internship-tips'); closeMobileMenu(); return false;">Tipps zur Praktikumssuche</a>
+						<a href="#" onclick="event.preventDefault(); event.stopPropagation(); showSection('company-search'); closeMobileMenu(); return false;">Unternehmen suchen</a>
+						<a href="#" onclick="event.preventDefault(); event.stopPropagation(); showSection('awarded-companies'); closeMobileMenu(); return false;">Ausgezeichnete Unternehmen</a>
+						<a href="#" onclick="event.preventDefault(); event.stopPropagation(); showSection('internship-guide'); closeMobileMenu(); return false;">Praktikumsleitfaden</a>
+						<a href="#" onclick="event.preventDefault(); event.stopPropagation(); showSection('internship-tips'); closeMobileMenu(); return false;">Tipps zur Praktikumssuche</a>
 					</div>
 				</div>
 			</div>
@@ -7362,10 +7366,7 @@
                 <div class="job-card">		
                     <div class="job-header">
                         <div class="job-info">
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <h3 onclick="showCompanyPage('${jobData.companyName}')" style="margin: 0;">${jobData.companyName}</h3>
-                                ${getCompanyVerifiedBadge(jobData.companyName)}
-                            </div>
+							<h3 onclick="showCompanyPage('${reviewData.companyName}')" style="margin: 0; font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 600;">${reviewData.companyName}${getCompanyVerifiedBadge(reviewData.companyName) ? ' ' + getCompanyVerifiedBadge(reviewData.companyName) : ''}</h3>
                             <p>${jobData.address}</p>
 							<div class="company-badges" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">
 								<div class="category-badge" style="padding: 0.35rem 1.25rem; margin-top: 0; margin-bottom: 0;">${jobData.category}</div>								
@@ -7375,7 +7376,7 @@
 							${jobData.customerType ? `<p>Kundschaft: ${jobData.customerType}</p>` : ''}
                             ${jobData.benefits ? `<p>Benefits: ${jobData.benefits}</p>` : ''}							
                         </div>
-                        <div style="text-align: center;">
+						<div style="text-align: center; padding-top: 0;">
 							<div class="salary-badge ${salaryBadge.class}" title="${salaryBadge.text}" style="font-size: 1rem; font-weight: 500; padding: 0.5rem 1rem;">${jobData.salary}€</div>
                         </div>
                     </div>
@@ -8933,7 +8934,7 @@
 			const isOpen = wt.getAttribute('data-open') === 'true';
 			dd.classList.toggle('mobile-sub-open');
 			wt.setAttribute('data-open', isOpen ? 'false' : 'true');
-			wt.innerHTML = 'Wissenswert <span style="display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;vertical-align:middle;margin-left:4px;' + (isOpen ? 'border-top:5px solid currentColor;' : 'border-bottom:5px solid currentColor;') + '"></span>';
+			wt.innerHTML = 'Wissenswert <span style="font-size:0.7em;vertical-align:middle;">' + (isOpen ? '▾' : '▴') + '</span>';
 		}
 
 		function renderLandingFallback() {
