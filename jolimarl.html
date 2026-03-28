@@ -276,6 +276,9 @@
         background: var(--bg);
         min-height: calc(100vh - 300px);
     }
+    #write-section { background: white; }
+    #write-section .form-section, #write-section .form-group { background: var(--bg); }
+
 
     .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
     .content-section { display: none; }
@@ -1535,7 +1538,6 @@
 		#all-companies-container [style*="display: flex; align-items: center; gap: 0.5rem"] { flex-wrap: wrap !important; align-items: baseline !important; }
 		#all-companies-container h4 { display: inline !important; font-size: 1.05rem !important; font-family: 'DM Sans', sans-serif !important; }
 		#all-companies-container h4 .verified-badge { display: inline-flex !important; vertical-align: middle !important; }
-		#all-companies-container [style*="display: flex; align-items: center; gap: 0.5rem"] { display: inline !important; }
 		#all-companies-container .verified-badge { display: inline-flex !important; vertical-align: middle !important; align-items: center !important; position: relative !important; top: -1px !important; }
 		#all-companies-container [style*="margin-top: 0.4rem"] { gap: 0 !important; }
 		#all-companies-container .category-badge { margin-bottom: 0.5rem !important; }
@@ -2763,7 +2765,7 @@
 						</label>
 					</div>
 					
-					<button type="submit" class="btn btn-primary">Stellenangebot einreichen</button>
+					<button type="submit" class="btn btn-primary" style="display:block;margin:0 auto;">Stellenangebot einreichen</button>
 				</form>
 			</div>	
         </div>
