@@ -471,6 +471,7 @@
 
     .salary-badge:hover { opacity: 0.85; }
     .salary-badge-positioned { position: absolute; top: 1rem; right: 1rem; }
+	.bphd-badge-container { position: absolute; top: -20px; right: -20px; cursor: pointer; z-index: 5; }
 
     .salary-under-tariff { background: #fdecea; color: var(--red); border: 1px solid rgba(184,50,40,0.2); }
     .salary-tariff { background: #fff3cd; color: #856404; border: 1px solid rgba(133,100,4,0.2); }
@@ -1465,8 +1466,7 @@
 		.company-section-header > div[style*="display: flex"] { flex-direction: column !important; align-items: center !important; text-align: center; gap: 0.75rem !important; }
 		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] { flex-direction: column !important; align-items: center !important; text-align: center !important; width: 100% !important; overflow: visible !important; }
 		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] img { width: 100px !important; height: 100px !important; margin: 0 auto !important; flex-shrink: 0 !important; }
-		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] > div { width: 100% !important; }
-		#company-section [style*="position: relative; flex-shrink: 0; width: 140px"] { width: 140px !important; flex-shrink: 0 !important; }		
+		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] > div[style*="flex: 1"] { width: 100% !important; }		
 		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] h1 { font-size: 1.4rem !important; text-align: center !important; }
 		#company-section [style*="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem"] { justify-content: center !important; flex-wrap: wrap !important; }
 		#company-section [style*="margin-top: 0.75rem; display: flex; align-items: center"] { justify-content: center !important; }
@@ -1552,7 +1552,6 @@
 		.job-create-btn { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
 		.overall-rating[style*="transform: scale(1.2)"] { transform: scale(1) !important; }
 
-		.bphd-badge-container { position: absolute !important; top: -20px !important; right: -20px !important; z-index: 10 !important; }
 		#company-section [style*="position: relative; flex-shrink: 0; width: 140px"] { overflow: visible !important; }
 		#company-section [style*="position: relative; display: flex; align-items: center; gap: 2rem"] { overflow: visible !important; }
 		#company-section [style*="position: absolute; top: -15px; right: -15px"] { top: -10px !important; right: 10px !important; }
@@ -1572,6 +1571,8 @@
 		
 		.salary-badge-positioned { font-size: 0.85rem !important; padding: 0.3rem 0.65rem !important; }
 		.job-info { padding-right: 5rem !important; }
+		
+		.profile-img-wrapper { position: relative !important; overflow: visible !important; }		
 	}
 
     @media (max-width: 380px) {
@@ -5235,7 +5236,7 @@
 			container.innerHTML = `
 				<!-- Header -->
 				<div style="position: relative; display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(42,18,16,0.06); overflow: visible;">
-					<div style="position: relative; flex-shrink: 0; width: 140px; height: 140px; overflow: visible;">
+					<div class="profile-img-wrapper" style="flex-shrink: 0; width: 140px; height: 140px;">
 						<img src="${company.profileImage}" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover;" alt="Profilbild">
 						${company.bphdAwards && company.bphdAwards.length > 0 ? `
 						<div class="bphd-badge-container" style="position: absolute; top: -20px; right: -20px; cursor: pointer; z-index: 5;" onclick="showBphdAwardsModal('${company.name.replace(/'/g, "\\'")}')">
