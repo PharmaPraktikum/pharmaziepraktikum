@@ -1379,8 +1379,8 @@
         .landing-features-grid { grid-template-columns: 1fr; }
     }
 
-	/* ── MOBILE (≤ 600px) ── */
-	@media (max-width: 600px) {
+	/* ── MOBILE (≤ 768px) ── */
+	@media (max-width: 768px) {
 
 		/* ── HAMBURGER ── */
 		.hamburger { display: flex; }
@@ -3164,52 +3164,43 @@
 			`;
 			document.body.appendChild(tip);
 
-			document.addEventListener('mousemove', function(e) {
+			document.addEventListener('mouseover', function(e) {
 				const badge = e.target.closest('.salary-badge[title], .verified-badge[data-tooltip]');
-				if (!badge) { 
-					if (tip.style.opacity === '1') {
-						tip.style.opacity = '0';
-						setTimeout(() => { tip.style.display = 'none'; }, 150);
-					}
-					return; 
-				}
-
+				if (!badge) return;
 				const text = badge.getAttribute('title') || badge.getAttribute('data-tooltip');
 				if (!text) return;
 
 				tip.textContent = text;
 				tip.style.display = 'block';
 				
-				// Position berechnen
 				const rect = badge.getBoundingClientRect();
 				const tipWidth = Math.min(280, window.innerWidth * 0.9);
-				
-				let left = rect.left + rect.width / 2 - tipWidth / 2;
-				// Rand-Schutz links/rechts
 				const margin = 8;
+				let left = rect.left + rect.width / 2 - tipWidth / 2;
 				if (left < margin) left = margin;
 				if (left + tipWidth > window.innerWidth - margin) left = window.innerWidth - tipWidth - margin;
 				
-				let top = rect.top - 10; // Erstmal oben drüber
 				tip.style.left = left + 'px';
-				tip.style.top = '0px'; // temporär setzen zum Messen
+				tip.style.top = '0px';
 				tip.style.width = tipWidth + 'px';
 				
-				// Höhe nach Render messen
 				requestAnimationFrame(() => {
 					const tipHeight = tip.offsetHeight;
-					top = rect.top - tipHeight - 8;
-					// Falls oben kein Platz: unten anzeigen
+					let top = rect.top - tipHeight - 8;
 					if (top < margin) top = rect.bottom + 8;
 					tip.style.top = top + 'px';
 					tip.style.opacity = '1';
 				});
 			});
 
-			document.addEventListener('mouseleave', function(e) {
+			document.addEventListener('mouseout', function(e) {
+				const badge = e.target.closest('.salary-badge[title], .verified-badge[data-tooltip]');
+				if (!badge) return;
+				const related = e.relatedTarget;
+				if (related && badge.contains(related)) return;
 				tip.style.opacity = '0';
 				setTimeout(() => { tip.style.display = 'none'; }, 150);
-			}, true);
+			});
 		})();
         // Globale Variablen
         let currentSection = 'landing';
@@ -4055,7 +4046,7 @@
 				</div>
 
 				<!-- Verifizierung/Kontakt -->
-				<div style="margin-bottom: 2rem; padding: 1rem 2rem; background: #f8f9fa; border-radius: 10px; text-align: center;">
+				<div style="margin-bottom: 2rem; padding: 1rem 2rem; background: transparent; border-radius: 10px; text-align: center;">
 					${company.verified ? `
 						<span>Haben Sie Fragen an das Unternehmen?</span>
 						<button class="btn btn-primary" onclick="showContactCompanyModal('${company.name}')" style="margin-left: 1rem;">Unternehmen kontaktieren</button>
@@ -5287,7 +5278,7 @@
 				` : ''}
 
 				<!-- Verifizierung/Kontakt -->
-				<div style="margin-bottom: 2rem; padding: 1rem 2rem; background: #f8f9fa; border-radius: 10px; text-align: center;">
+				<div style="margin-bottom: 2rem; padding: 1rem 2rem; background: transparent; border-radius: 10px; text-align: center;">
 					${company.verified ? `
 						<span>Haben Sie Fragen an das Unternehmen?</span>
 						<button class="btn btn-primary" onclick="showContactCompanyModal('${company.name}')" style="margin-left: 1rem;">Unternehmen kontaktieren</button>
@@ -8454,12 +8445,18 @@
 			document.getElementById('remove-file-btn').style.display = 'none';
 		}
 
+		// Initialen History-State setzen
+		history.replaceState({ section: 'landing' }, '', '#landing');
+
+		let isPopState = false;
 		window.addEventListener('popstate', function(e) {
+			isPopState = true;
 			if (e.state && e.state.section) {
 				showSection(e.state.section);
 			} else {
 				showSection('landing');
 			}
+			isPopState = false;
 		});
 		
 		// Basis-Funktionen für Navigation und Suche
@@ -8471,8 +8468,8 @@
 				document.querySelectorAll('.dropdown-content a').forEach(a => a.classList.remove('active'));
 				document.getElementById('landing-section').classList.add('active');
 				currentSection = 'landing';
+				if (!isPopState) history.pushState({ section: 'landing' }, '', '#landing');
 				window.scrollTo({ top: 0, behavior: 'smooth' });
-				// Daten laden (jeweils nur einmal)
 				loadLandingStats();
 				loadLandingHighlightReviews();
 				return;
@@ -8666,7 +8663,7 @@
 			}
 			
 			currentSection = section;
-			history.pushState({ section: section }, '', '#' + section);
+			if (!isPopState) history.pushState({ section: section }, '', '#' + section);
 
 
 			// Scrolle Job-Formular nach oben
@@ -11045,8 +11042,15 @@
 			} catch(e) {}
 		}
 
-		// Sofort beim Laden aufrufen
-		preloadPrivacyAndAgb();
+		// Warte bis Supabase bereit ist, dann vorladen
+		function waitForSupabaseAndPreload() {
+			if (window.supabase) {
+				preloadPrivacyAndAgb();
+			} else {
+				setTimeout(waitForSupabaseAndPreload, 100);
+			}
+		}
+		waitForSupabaseAndPreload();
 
 		async function showPrivacyModal() {
 			const modal = document.getElementById('privacy-modal');
