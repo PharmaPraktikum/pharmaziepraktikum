@@ -10738,6 +10738,9 @@
 				cropperCss.rel = 'stylesheet';
 				cropperCss.href = 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css';
 				document.head.appendChild(cropperCss);
+				const cropperOverride = document.createElement('style');
+				cropperOverride.textContent = '.cropper-dashed { display: none !important; } .cropper-line { display: none !important; } .cropper-point { display: none !important; }';
+				document.head.appendChild(cropperOverride);
 				await new Promise(resolve => {
 					const cropperJs = document.createElement('script');
 					cropperJs.src = 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js';
@@ -10765,8 +10768,7 @@
 				'<img id="cropper-image" style="max-width:100%;display:block;">' +
 				'<div style="display:flex;gap:0.5rem;margin-top:0.75rem;justify-content:center;align-items:center;">' +
 				'<button type="button" id="crop-zoom-out" style="background:white;color:var(--dark);border:1.5px solid var(--border);width:36px;height:36px;border-radius:8px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:600;">−</button>' +
-				'<input type="range" id="crop-zoom-slider" min="-50" max="50" value="0" style="width:100px;accent-color:var(--red);">' +
-				'<button type="button" id="crop-zoom-in" style="background:white;color:var(--dark);border:1.5px solid var(--border);width:36px;height:36px;border-radius:8px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:600;">+</button>' +
+				'<button type="button" id="crop-zoom-in" style="background:white;color:var(--dark);border:1.5px solid var(--border);width:36px;height:36px;border-radius:8px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:600;">+</button>' +				
 				'</div>' +
 				'<div style="display:flex;gap:0.5rem;margin-top:0.5rem;justify-content:center;">' +
 				'<button type="button" id="crop-confirm-btn" style="background:var(--red);color:white;border:none;padding:0.5rem 1.25rem;border-radius:8px;font-weight:600;cursor:pointer;font-family:\'DM Sans\',sans-serif;">Ausschnitt übernehmen</button>' +
@@ -10871,29 +10873,16 @@
 				document.getElementById('cropper-container').style.display = 'none';
 				document.getElementById('company-logo-preview').style.display = 'block';
 				document.getElementById('company-logo-upload').value = '';
-				document.getElementById('crop-zoom-slider').value = 0;
 			});
 
 			document.getElementById('crop-zoom-in').addEventListener('click', function() {
 				if (!cropperInstance) return;
 				cropperInstance.zoom(0.1);
-				document.getElementById('crop-zoom-slider').value = Math.min(50, parseInt(document.getElementById('crop-zoom-slider').value) + 10);
 			});
 
 			document.getElementById('crop-zoom-out').addEventListener('click', function() {
 				if (!cropperInstance) return;
 				cropperInstance.zoom(-0.1);
-				document.getElementById('crop-zoom-slider').value = Math.max(-50, parseInt(document.getElementById('crop-zoom-slider').value) - 10);
-			});
-
-			document.getElementById('crop-zoom-slider').addEventListener('input', function() {
-				if (!cropperInstance) return;
-				const val = parseInt(this.value);
-				const imageData = cropperInstance.getImageData();
-				const canvasData = cropperInstance.getCanvasData();
-				const ratio = canvasData.width / imageData.naturalWidth;
-				const targetRatio = ratio + val * 0.005;
-				cropperInstance.zoomTo(targetRatio);
 			});
 			
 			document.getElementById('company-edit-form').addEventListener('submit', async function(e) {
