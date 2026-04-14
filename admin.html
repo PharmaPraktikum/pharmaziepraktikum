@@ -897,8 +897,13 @@
 			</div>			
 		</div>
 	</div>
+
+	<script>
+	  window.SUPABASE_URL = 'https://wotwmwcgbihlhlcwlvbm.supabase.co';
+	  window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvdHdtd2NnYmlobGhsY3dsdmJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0Nzc4MDcsImV4cCI6MjA4NjA1MzgwN30.Zwt-clrOnntZQZ_NvpKJVB5xBCZTl_PgzrC9F_7F-uU';
+	</script>
 	
-	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+	<script type="module">
 		import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 		import * as api from './js/api.js';
 		import { supabase as anonSupabase } from './js/supabase-client.js';
@@ -912,10 +917,10 @@
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${session.access_token}`,
+					'Authorization': `Bearer ${window.SUPABASE_ANON_KEY}`,
 					'apikey': window.SUPABASE_ANON_KEY
 				},
-				body: JSON.stringify({ action, ...params })
+				body: JSON.stringify({ action, token: session.access_token, ...params })
 			});
 			const result = await response.json();
 			if (!result.success) throw new Error(result.error || 'Fehler');
