@@ -5,8 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PharmaFaro – Admin</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+	<style>
+        @font-face {
+            font-family: 'Fraunces';
+            src: url('./fonts/fraunces-300.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Fraunces';
+            src: url('./fonts/fraunces-300-italic.woff2') format('woff2');
+            font-weight: 300;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Fraunces';
+            src: url('./fonts/fraunces-600.woff2') format('woff2');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Fraunces';
+            src: url('./fonts/fraunces-700.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Fraunces';
+            src: url('./fonts/fraunces-400-italic.woff2') format('woff2');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'DM Sans';
+            src: url('./fonts/dm-sans-300.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'DM Sans';
+            src: url('./fonts/dm-sans-400.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'DM Sans';
+            src: url('./fonts/dm-sans-500.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'DM Sans';
+            src: url('./fonts/dm-sans-600.woff2') format('woff2');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
     <style>
         :root {
             --pf-red:    #b83228;
@@ -390,10 +453,6 @@
             
             <button type="submit" class="btn" id="login-btn">Anmelden</button>
         </form>
-        
-        <p style="margin-top: 1.5rem; text-align: center; color: #666; font-size: 0.85rem;">
-            Bei Problemen: <a href="/cdn-cgi/l/email-protection#83f0f6f3f3ecf1f7c3f3ebe2f1eee2f9eae6f3f1e2e8f7eae8f6eeade7e6" style="color: #667eea;">Support kontaktieren</a>
-        </p>
     </div>
 
 
@@ -644,7 +703,7 @@
 					</div>
 					<div id="award-add-feedback" style="display:none;padding:0.75rem;background:#d4edda;border-radius:8px;margin-bottom:1rem;color:#155724;"></div>
 					<button onclick="window.addAward()"
-							style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:0.75rem 1.5rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;">
+							style="background: #1a4a7a;color:white;padding:0.75rem 1.5rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;">
 						+ Auszeichnung hinzufügen
 					</button>
 				</div>
@@ -750,7 +809,7 @@
 					<div id="tariff-salary-current" style="padding: 0.75rem; background: #d4edda; border-radius: 8px; margin-bottom: 1rem; display: none; color: #155724; font-size: 0.95rem;"></div>
 					
 					<button onclick="window.saveTariffSalary()" 
-							style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+							style="background: #1a4a7a; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
 						Speichern
 					</button>
 					<div style="margin-top: 1.5rem;">
@@ -770,13 +829,13 @@
 							</div>
 							
 							<button onclick="window.addTariffHistoryRow()"
-									style="background: #28a745; color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer; margin-top: 1rem;">
+									style="background: var(--pf-mid); color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer; margin-top: 1rem;">
 								+ Zeile hinzufügen
 							</button>
 							
 							<div style="margin-top: 1rem;">
 								<button onclick="window.saveTariffHistory()"
-										style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+										style="background: #1a4a7a; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
 									Historie speichern
 								</button>
 							</div>
@@ -806,7 +865,7 @@
 					
 					<div style="display: flex; gap: 1rem;">
 						<button onclick="window.saveGuideContent()" 
-								style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+								style="background: #1a4a7a; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
 							Leitfaden speichern
 						</button>
 						<button onclick="window.previewContent('guide')"
@@ -829,7 +888,7 @@
 					
 					<div style="display: flex; gap: 1rem;">
 						<button onclick="window.saveTipsContent()"
-								style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+								style="background: #1a4a7a; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
 							Tipps speichern
 						</button>
 						<button onclick="window.previewContent('tips')"
@@ -848,7 +907,7 @@
 							  placeholder="z.B. &lt;p&gt;Bitte beachten Sie folgende Richtlinien...&lt;/p&gt;"></textarea>
 					<div id="review-guidelines-feedback" style="display:none;padding:0.75rem;background:#d4edda;border-radius:8px;margin-bottom:1rem;color:#155724;"></div>
 					<button onclick="window.saveGuidelinesContent('review')"
-							style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+							style="background: #1a4a7a; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
 						Richtlinien speichern
 					</button>
 				</div>
@@ -862,7 +921,7 @@
 							  placeholder="z.B. &lt;p&gt;Bitte beachten Sie folgende Richtlinien...&lt;/p&gt;"></textarea>
 					<div id="job-guidelines-feedback" style="display:none;padding:0.75rem;background:#d4edda;border-radius:8px;margin-bottom:1rem;color:#155724;"></div>
 					<button onclick="window.saveGuidelinesContent('job')"
-							style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+							style="background: #1a4a7a; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
 						Richtlinien speichern
 					</button>
 				</div>	
@@ -876,7 +935,7 @@
 							  placeholder="z.B. &lt;h3&gt;1. Verantwortlicher&lt;/h3&gt;&lt;p&gt;...&lt;/p&gt;"></textarea>
 					<div id="privacy-policy-feedback" style="display:none;padding:0.75rem;background:#d4edda;border-radius:8px;margin-bottom:1rem;color:#155724;"></div>
 					<button onclick="window.savePrivacyPolicy()"
-							style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+							style="background: #1a4a7a; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
 						Datenschutzerklärung speichern
 					</button>
 				</div>	
@@ -890,7 +949,7 @@
 							  placeholder="z.B. &lt;h3&gt;1. Geltungsbereich&lt;/h3&gt;&lt;p&gt;...&lt;/p&gt;"></textarea>
 					<div id="agb-feedback" style="display:none;padding:0.75rem;background:#d4edda;border-radius:8px;margin-bottom:1rem;color:#155724;"></div>
 					<button onclick="window.saveAgbContent()"
-							style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+							style="background: #1a4a7a; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
 						AGB speichern
 					</button>
 				</div>				
@@ -1246,7 +1305,7 @@
 							${review.user_email ? 
 								`<button class="action-btn" 
 										 onclick="window.location.href='mailto:${review.user_email}?subject=${encodeURIComponent('Ihre Bewertung auf PharmaFaro.de - ID: ' + review.id.substring(0,8))}'"
-										 style="background:#17a2b8;color:white;">
+										 style="background:#1a4a7a;color:white;">
 									Kontaktieren
 								</button>` : ''
 							}
@@ -1299,7 +1358,7 @@
 							${job.contact_email ? 
 								`<button class="action-btn"
 										 onclick="window.location.href='mailto:${job.contact_email}?subject=${encodeURIComponent('Ihr Stellenangebot auf PharmaFaro.de - ID: ' + job.id.substring(0,8))}'"
-										 style="background:#17a2b8;color:white;">
+										 style="background:#1a4a7a;color:white;">
 									Kontaktieren
 								</button>` : ''
 							}
@@ -1718,7 +1777,7 @@
 								Zusammenführen
 							</button>
 							${c.verified ? 
-								'<button onclick="contactVerifiedCompany(\'' + c.name.replace(/'/g, "\\'") + '\', \'' + (c.contactEmail || '') + '\', \'' + (c.contactPerson || '') + '\')" style="padding:0.3rem 0.6rem;font-size:0.8rem;border:none;border-radius:6px;cursor:pointer;background:#28a745;color:white;margin-left:0.5rem;">Kontaktieren</button>' 
+								'<button onclick="contactVerifiedCompany(\'' + c.name.replace(/'/g, "\\'") + '\', \'' + (c.contactEmail || '') + '\', \'' + (c.contactPerson || '') + '\')" style="padding:0.3rem 0.6rem;font-size:0.8rem;border:none;border-radius:6px;cursor:pointer;background:#1a4a7a;color:white;margin-left:0.5rem;">Kontaktieren</button>' 
 							: ''}	
 						</div>
 					</td>
@@ -2247,7 +2306,7 @@
 										<button onclick="window.toggleStatus('${r.id}','inactive');this.closest('.modal').remove();" 
 												class="action-btn btn-deactivate">Deaktivieren</button>
 										${r.user_email ? `<button onclick="window.location.href='mailto:${r.user_email}?subject=${encodeURIComponent('Ihre Bewertung auf PharmaFaro.de - ID: ' + r.id.substring(0,8))}'"
-												class="action-btn" style="background:#17a2b8;color:white;">Kontaktieren</button>` : ''}
+												class="action-btn" style="background:#1a4a7a;color:white;">Kontaktieren</button>` : ''}
 									</div>
 								</div>
 							`).join('')
@@ -2295,7 +2354,7 @@
 											${j.status === 'active' ? 'Deaktivieren' : 'Aktivieren'}
 										</button>
 										${j.contact_email ? `<button onclick="window.location.href='mailto:${j.contact_email}?subject=${encodeURIComponent('Ihr Stellenangebot auf PharmaFaro.de - ID: ' + j.id.substring(0,8))}'"
-												class="action-btn" style="background:#17a2b8;color:white;">Kontaktieren</button>` : ''}
+												class="action-btn" style="background:#1a4a7a;color:white;">Kontaktieren</button>` : ''}
 									</div>
 								</div>
 							`).join('')
