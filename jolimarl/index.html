@@ -1749,7 +1749,8 @@
 		#write-section button[type="submit"], #jobs-modal button[type="submit"] { display: block !important; margin: 0 auto !important; width: auto !important; min-width: 60% !important; }
 		
 		.salary-badge-positioned { font-size: 0.85rem !important; padding: 0.3rem 0.65rem !important; }
-		.job-info { padding-right: 5rem !important; }
+		.job-info { padding-right: 7.5rem !important; }
+		.job-info p { max-width: 100%; word-break: break-word; overflow-wrap: break-word; }
 		
 		.profile-img-wrapper { position: relative !important; overflow: visible !important; width: 140px !important; height: 110px !important; flex-shrink: 0 !important; align-self: center !important; margin: 0 auto !important; }
 		.company-header-box { gap: 0.75rem !important; }
@@ -4910,6 +4911,7 @@
             if (activeAdvancedFilters.length > 0) {
                 const chipsContainer = document.createElement('div');
                 chipsContainer.className = 'active-filters-chips';
+                chipsContainer.style.order = '4';
                 chipsContainer.innerHTML = '<h4>Aktive Zusatzfilter:</h4><div class="filter-chips"></div>';
                 
                 const chipsDiv = chipsContainer.querySelector('.filter-chips');
@@ -4952,6 +4954,7 @@
             if (activeJobAdvancedFilters.length > 0) {
                 const chipsContainer = document.createElement('div');
                 chipsContainer.className = 'active-filters-chips';
+                chipsContainer.style.order = '4';
                 chipsContainer.innerHTML = '<h4>Aktive Zusatzfilter:</h4><div class="filter-chips"></div>';
                 
                 const chipsDiv = chipsContainer.querySelector('.filter-chips');
