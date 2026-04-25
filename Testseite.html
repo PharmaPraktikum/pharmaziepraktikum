@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
 	<meta charset="UTF-8">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+	<meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://*.supabase.co https://nominatim.openstreetmap.org; img-src 'self' data: https:;">
     <meta name="referrer" content="strict-origin-when-cross-origin">
 	<!-- Supabase Backend Integration -->
 	<script type="module">
@@ -17,7 +18,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PharmaFaro - Bewertungsplattform für Pharmaziepraktika</title>
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Lora:ital,wght@0,500;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap');
+    @font-face {
+        font-family: 'Fraunces';
+        src: url('./fonts/fraunces-300.woff2') format('woff2');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Fraunces';
+        src: url('./fonts/fraunces-300-italic.woff2') format('woff2');
+        font-weight: 300;
+        font-style: italic;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Fraunces';
+        src: url('./fonts/fraunces-600.woff2') format('woff2');
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Fraunces';
+        src: url('./fonts/fraunces-700.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Fraunces';
+        src: url('./fonts/fraunces-400-italic.woff2') format('woff2');
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Lora';
+        src: url('./fonts/lora-500.woff2') format('woff2');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Lora';
+        src: url('./fonts/lora-500-italic.woff2') format('woff2');
+        font-weight: 500;
+        font-style: italic;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Lora';
+        src: url('./fonts/lora-400-italic.woff2') format('woff2');
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'DM Sans';
+        src: url('./fonts/dm-sans-300.woff2') format('woff2');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'DM Sans';
+        src: url('./fonts/dm-sans-400.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'DM Sans';
+        src: url('./fonts/dm-sans-500.woff2') format('woff2');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'DM Sans';
+        src: url('./fonts/dm-sans-600.woff2') format('woff2');
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+    }
 
     :root {
         --red: #b83228;
@@ -1680,6 +1764,13 @@
 </style>
 </head>
 <body>
+
+<script>
+  if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    location.replace('https:' + location.href.substring(location.protocol.length));
+  }
+</script>
+
     <!-- Header -->
     <div class="header">
         <div class="nav">
@@ -2254,7 +2345,7 @@
 						<div class="form-group" style="margin-top: 0.75rem; padding: 1rem; background: transparent; border-radius: 8px;">
 							<label style="display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; margin: 0;">
 								<input type="checkbox" id="privacy-checkbox-review" required style="margin-top: 0.25rem; width: 18px; height: 18px; cursor: pointer;">
-								<span>Ich habe die <span style="text-decoration: underline; color: var(--red); cursor: pointer;" onclick="event.preventDefault(); showPrivacyModal();">Datenschutzerklärung</span> gelesen und stimme der Verarbeitung jener Daten zu, die mit dem Einreichen dieser Bewertung verbunden sind.</span>
+								<span>Ich habe die <span style="text-decoration: underline; color: var(--red); cursor: pointer;" onclick="event.preventDefault(); showPrivacyModal();">Datenschutzerklärung</span> und die <span style="text-decoration: underline; color: var(--red); cursor: pointer;" onclick="event.preventDefault(); showAgbModal();">Nutzungsbedingungen</span> gelesen und stimme diesen zu.</span>
 							</label>
 						</div>
 
@@ -2554,6 +2645,7 @@
 						<option value="date-asc">Aufsteigend nach Aktualität</option>
 						<option value="salary-desc">Absteigend nach Gehalt</option>
 						<option value="salary-asc">Aufsteigend nach Gehalt</option>
+						<option value="start-asc">Aufsteigend nach Frühestem Beginn</option>
 						<option value="saturday-asc">Aufsteigend nach Samstagsarbeit</option>
 						<option value="saturday-desc">Absteigend nach Samstagsarbeit</option>
 					</select>
@@ -2697,6 +2789,33 @@
 							<div class="form-group">
 								<label>Samstagsarbeit (x-mal im Monat)</label>
 								<input type="number" id="job-saturday-work" placeholder="z.B. 2" min="0">
+							</div>							
+							<div class="form-group">
+								<label>Frühester Praktikumsbeginn *</label>
+								<select id="job-start-type" onchange="toggleJobStartFields()" style="width: 100%; padding: 0.75rem; border: 2px solid #e9ecef; border-radius: 8px;">
+									<option value="fixed">Fester Beginn</option>
+									<option value="flexible">Flexibel</option>
+								</select>
+								<div id="job-start-date-fields" style="display: flex; gap: 1rem; margin-top: 0.75rem;">
+									<select id="job-start-month" style="flex: 1; padding: 0.75rem; border: 2px solid #e9ecef; border-radius: 8px;">
+										<option value="">Monat</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>
+									<select id="job-start-year" style="flex: 1; padding: 0.75rem; border: 2px solid #e9ecef; border-radius: 8px;">
+										<option value="">Jahr</option>
+									</select>
+								</div>
 							</div>
 							<div class="form-group">
 								<label>Arbeitszeiten *</label>
@@ -2797,7 +2916,7 @@
 							</select>
 						</div>
 								
-						<div class="form-group">
+						<div class="form-group" id="job-benefits-field">
 							<label>Benefits</label>
 							<div class="checkbox-group">
 								<label><input type="checkbox" value="wohnung"> Wohnung</label>
@@ -2854,7 +2973,7 @@
 					<div class="form-group" style="margin-top: 0.75rem; padding: 1rem; background: transparent; border-radius: 8px;">
 						<label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; margin: 0;">
 							<input type="checkbox" id="privacy-checkbox-job" required style="width: 18px; height: 18px; min-width: 18px; cursor: pointer; accent-color: var(--red);">
-							<span>Ich habe die <span style="text-decoration: underline; color: var(--red); cursor: pointer;" onclick="event.preventDefault(); showPrivacyModal();">Datenschutzerklärung</span> gelesen und stimme der Verarbeitung jener Daten zu, die mit dem Einreichen dieses Stellenangebots verbunden sind.</span>
+							<span>Ich habe die <span style="text-decoration: underline; color: var(--red); cursor: pointer;" onclick="event.preventDefault(); showPrivacyModal();">Datenschutzerklärung</span> und die <span style="text-decoration: underline; color: var(--red); cursor: pointer;" onclick="event.preventDefault(); showAgbModal();">Nutzungsbedingungen</span> gelesen und stimme diesen zu.</span>
 						</label>
 					</div>
 					
@@ -3156,6 +3275,37 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-section">
+					<!-- Frühester Praktikumsbeginn -->
+					<div class="form-group">
+						<label style="font-weight: 600;">Frühester Praktikumsbeginn</label>
+						<select id="job-filter-start-type" onchange="toggleJobFilterStartFields()" style="width: 100%; padding: 0.75rem; border: 2px solid #e9ecef; border-radius: 8px;">
+							<option value="">Bitte auswählen</option>
+							<option value="flexible">Flexibel</option>
+							<option value="fixed">Fester Beginn (ab Monat/Jahr)</option>
+						</select>
+						<div id="job-filter-start-date-fields" style="display: none; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+							<div style="display: flex; gap: 1rem;">
+								<select id="job-filter-start-month" style="flex: 1; padding: 0.75rem; border: 2px solid #e9ecef; border-radius: 8px;">
+									<option value="">Monat (ab)</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+								<select id="job-filter-start-year" style="flex: 1; padding: 0.75rem; border: 2px solid #e9ecef; border-radius: 8px;">
+									<option value="">Jahr (ab)</option>
+								</select>
+							</div>
+						</div>
+					</div>
 					<!-- Umkreissuche -->
 					<div class="form-group">
 						<label style="font-weight: 600;">Umkreissuche</label>
@@ -3361,7 +3511,7 @@
 			</div>
 		</div>
 		<div class="footer-bottom">
-			© <script>document.write(new Date().getFullYear())</script> PharmaFaro · Alle Rechte vorbehalten
+			© <span id="footer-year"></span><script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script> PharmaFaro · Alle Rechte vorbehalten
 		</div>
 	</div>
 
@@ -3762,13 +3912,11 @@
 				area = getAreaLabel(document.getElementById('job-university-area')?.value || '');
 			}
 
-			// Benefits - über Parent-Suche
-			const benefitsSection = Array.from(document.querySelectorAll('.form-section')).find(section => 
-				section.querySelector('h3')?.textContent.trim() === 'Benefits'
-			);
+			// Benefits - direkt über ID
 			const benefitsChecked = [];
-			if (benefitsSection) {
-				benefitsSection.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+			const benefitsField = document.getElementById('job-benefits-field');
+			if (benefitsField) {
+				benefitsField.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
 					if (cb.id !== 'job-benefits-sonstige') {
 						benefitsChecked.push(cb.value);
 					}
@@ -3806,6 +3954,18 @@
 				customerType = labels[sliderValue];
 			}
 			
+			const startType = document.getElementById('job-start-type')?.value || 'fixed';
+			let earliestStart = 'Flexibel';
+			if (startType === 'fixed') {
+				const month = document.getElementById('job-start-month')?.value;
+				const year = document.getElementById('job-start-year')?.value;
+				if (month && year) {
+					earliestStart = String(month).padStart(2, '0') + '/' + year;
+				} else {
+					earliestStart = '';
+				}
+			}
+
 			const formData = {
 				id: nextJobId,
 				companyName: document.getElementById('job-company-name')?.value || '',
@@ -3820,6 +3980,7 @@
 				workingHoursData: workingHoursData,
 				benefits: benefits,
 				customerType: customerType,
+				earliestStart: earliestStart,
 				description: document.getElementById('job-description')?.value || '',
 				contactPerson: document.getElementById('job-contact-person')?.value || '',
 				contactEmail: document.getElementById('job-contact-email')?.value || '',
@@ -3834,11 +3995,59 @@
 			return formData;
 		}
 
+		function toggleJobStartFields() {
+			const type = document.getElementById('job-start-type').value;
+			document.getElementById('job-start-date-fields').style.display = type === 'fixed' ? 'flex' : 'none';
+		}
+
+		function initJobStartYears() {
+			const yearSelect = document.getElementById('job-start-year');
+			const filterYearSelect = document.getElementById('job-filter-start-year');
+			const currentYear = new Date().getFullYear();
+			[yearSelect, filterYearSelect].forEach(sel => {
+				if (!sel) return;
+				const label = sel === yearSelect ? 'Jahr' : 'Jahr (ab)';
+				sel.innerHTML = `<option value="">${label}</option>`;
+				for (let y = currentYear; y <= currentYear + 3; y++) {
+					const opt = document.createElement('option');
+					opt.value = y;
+					opt.textContent = y;
+					sel.appendChild(opt);
+				}
+			});
+		}
+
+		function toggleJobFilterStartFields() {
+			const type = document.getElementById('job-filter-start-type').value;
+			const fields = document.getElementById('job-filter-start-date-fields');
+			fields.style.display = type === 'fixed' ? 'flex' : 'none';
+		}
+
+		function ensureFilterYearsPopulated() {
+			const sel = document.getElementById('job-filter-start-year');
+			if (!sel) return;
+			if (sel.options.length <= 1) {
+				const currentYear = new Date().getFullYear();
+				sel.innerHTML = '<option value="">Jahr (ab)</option>';
+				for (let y = currentYear; y <= currentYear + 3; y++) {
+					const opt = document.createElement('option');
+					opt.value = y;
+					opt.textContent = y;
+					sel.appendChild(opt);
+				}
+			}
+		}
+
 		function extractEmailFromContact(contactText) {
 			const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/;
 			const match = contactText.match(emailRegex);
 			return match ? match[0] : '';
 		}
+
+		// Jahres-Dropdown beim ersten Laden befüllen
+		document.addEventListener('DOMContentLoaded', function() {
+			initJobStartYears();
+		});
         
 		async function submitJobToDatabase(formData) {
 			
@@ -3908,7 +4117,7 @@
 					const response = await fetch(url, {
 						headers: {
 							'Accept': 'application/json',
-							'User-Agent': 'PharmaFaro/1.0'
+							'User-Agent': 'PharmaFaro/1.0 (info@pharmafaro.de)'
 						}
 					});
 					
@@ -4074,7 +4283,7 @@
 			
 			jobLocationTimeout = setTimeout(async () => {
 				try {
-					const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&countrycodes=de,at,ch&limit=1`);
+					const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&countrycodes=de,at,ch&limit=1`, { headers: { 'User-Agent': 'PharmaFaro/1.0 (info@pharmafaro.de)' } });
 					const data = await response.json();
 					
 					if (data && data.length > 0) {
@@ -4677,6 +4886,7 @@
 				contactPerson: adminJob.contactPerson,
 				contactEmail: adminJob.contactEmail,
 				applicationNotes: adminJob.applicationNotes,
+				earliestStart: adminJob.earliest_start || adminJob.earliestStart || '',
 				postedDays: Math.floor((new Date() - new Date(adminJob.submittedAt)) / (1000 * 60 * 60 * 24))
 			};
 			
@@ -4765,6 +4975,12 @@
                 document.getElementById('job-radius-plz').value = '';
                 document.getElementById('job-radius-distance').value = '5';
             }
+            if (removedFilter.startsWith('Frühester Beginn:')) {
+                document.getElementById('job-filter-start-type').value = '';
+                document.getElementById('job-filter-start-date-fields').style.display = 'none';
+                document.getElementById('job-filter-start-month').value = '';
+                document.getElementById('job-filter-start-year').value = '';
+            }
             displayJobActiveFilters();
             updateJobResetButtonVisibility();
             filterJobs();
@@ -4811,7 +5027,11 @@
 			document.getElementById('job-customer-type-filter').value = '';
 			document.getElementById('job-time-model-filter').value = '';
 			document.getElementById('job-radius-plz').value = '';
-			document.getElementById('job-radius-distance').value = '5';			
+			document.getElementById('job-radius-distance').value = '5';
+			document.getElementById('job-filter-start-type').value = '';
+			document.getElementById('job-filter-start-date-fields').style.display = 'none';
+			document.getElementById('job-filter-start-month').value = '';
+			document.getElementById('job-filter-start-year').value = '';		
 
 			// Keine Ergebnisse Meldung zurücksetzen
 			checkNoJobResults();
@@ -6391,7 +6611,7 @@
             }
             
             try {
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&countrycodes=de&limit=1`);
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&countrycodes=de&limit=1`, { headers: { 'User-Agent': 'PharmaFaro/1.0 (info@pharmafaro.de)' } });
                 const data = await response.json();
                 
 				if (data && data.length > 0) {
@@ -6698,8 +6918,25 @@
 		}
 
 		function updateJobAdvancedModalState() {
+			ensureFilterYearsPopulated();
             document.querySelectorAll('#job-advanced-filters-modal input[type="checkbox"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('#job-advanced-filters-modal select').forEach(sel => sel.value = '');
+			// Frühester Beginn wiederherstellen
+			const activeStartFilter = activeJobAdvancedFilters.find(f => f.startsWith('Frühester Beginn:'));
+			if (activeStartFilter) {
+				if (activeStartFilter === 'Frühester Beginn: Flexibel') {
+					document.getElementById('job-filter-start-type').value = 'flexible';
+					document.getElementById('job-filter-start-date-fields').style.display = 'none';
+				} else {
+					const m = activeStartFilter.match(/ab (\d{2})\/(\d{4})/);
+					if (m) {
+						document.getElementById('job-filter-start-type').value = 'fixed';
+						document.getElementById('job-filter-start-date-fields').style.display = 'flex';
+						document.getElementById('job-filter-start-month').value = String(parseInt(m[1]));
+						document.getElementById('job-filter-start-year').value = m[2];
+					}
+				}
+			}
 
 			// Ausklappbare Abschnitte zuklappen
 			['job-offizin-content','job-industrie-content','job-universitaet-content'].forEach(id => {
@@ -6770,8 +7007,20 @@
 			openFilterSectionIfActive('job-universitaet-content', 'job-toggle-universitaet', jobUniActive);
         }
 
-        function applyJobAdvancedFilters() {
+		function applyJobAdvancedFilters() {
             activeJobAdvancedFilters = [];
+
+			// Frühester Beginn
+			const filterStartType = document.getElementById('job-filter-start-type')?.value;
+			if (filterStartType === 'flexible') {
+				activeJobAdvancedFilters.push('Frühester Beginn: Flexibel');
+			} else if (filterStartType === 'fixed') {
+				const filterMonth = document.getElementById('job-filter-start-month')?.value;
+				const filterYear = document.getElementById('job-filter-start-year')?.value;
+				if (filterMonth && filterYear) {
+					activeJobAdvancedFilters.push(`Frühester Beginn: ab ${String(filterMonth).padStart(2, '0')}/${filterYear}`);
+				}
+			}
             
 			// Spezialisierungen sammeln
 			const specializations = document.querySelectorAll('#job-advanced-filters-modal input[type="checkbox"]:checked');
@@ -7025,6 +7274,19 @@
 						const satA2 = getJobSaturdayWork(a);
 						const satB2 = getJobSaturdayWork(b);
 						return satB2 - satA2;
+
+					case 'start-asc':
+					case 'start-desc': {
+						const getStartDate = el => {
+							const val = el.getAttribute('data-earliest-start') || '';
+							if (val.toLowerCase() === 'flexibel') return sortValue === 'start-asc' ? 999999 : -1;
+							const m = val.match(/(\d{2})\/(\d{4})/);
+							return m ? parseInt(m[2]) * 12 + parseInt(m[1]) : (sortValue === 'start-asc' ? 999998 : -2);
+						};
+						const startA = getStartDate(a);
+						const startB = getStartDate(b);
+						return sortValue === 'start-asc' ? startA - startB : startB - startA;
+					}
 						
 					default:
 						return 0;
@@ -7183,19 +7445,19 @@
             const sortedWorkingHours = sortWorkingHours([...reviewData.workingHours]);
             
             return `
-                <div class="review-card" data-admin-id="${reviewData.adminId || reviewData.id}" data-company-name="${reviewData.companyName}">
+                <div class="review-card" data-admin-id="${reviewData.adminId || reviewData.id}" data-company-name="${escapeHtml(reviewData.companyName)}">
                     <button class="report-btn" onclick="showReportModal('${reviewData.adminId || reviewData.id}')" title="Bewertung melden">!</button>
                     <div class="review-header">
                         <div class="company-info">
 							<div onclick="showCompanyPage('${escapeAttr(reviewData.companyName)}')" style="margin: 0; font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 600; cursor: pointer; color: var(--dark); line-height: 1.4;">${formatNameWithBadge(reviewData.companyName, getCompanyVerifiedBadge(reviewData.companyName))}</div>							
-                            <p>${reviewData.address}</p>
+                            <p>${safeAddress}</p>
 							<div class="company-badges" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
-                                <div class="category-badge" style="padding: 0.35rem 1.25rem;">${reviewData.category}</div>
+                                <div class="category-badge" style="padding: 0.35rem 1.25rem;">${escapeHtml(reviewData.category)}</div>
                             </div>
-							${reviewData.benefits ? `<p>Benefits: ${reviewData.benefits}</p>` : ''}
-							${reviewData.customerType ? `<p>Kundschaft: ${reviewData.customerType}</p>` : ''}
-							${reviewData.specializations ? `<p>Spezialisierungen: ${reviewData.specializations}</p>` : ''}
-							${reviewData.area ? `<p>Bereich: ${reviewData.area}</p>` : ''}							
+							${safeBenefits ? `<p>Benefits: ${safeBenefits}</p>` : ''}
+							${safeCustomerType ? `<p>Kundschaft: ${safeCustomerType}</p>` : ''}
+							${safeSpecializations ? `<p>Spezialisierungen: ${safeSpecializations}</p>` : ''}
+							${safeArea ? `<p>Bereich: ${safeArea}</p>` : ''}					
                         </div>
 						<div style="text-align: center; padding-top: 0;">
                             <div class="overall-rating" style="transform: scale(1.2); margin-top: 0.75rem;">
@@ -7214,12 +7476,12 @@
 						</div>
 						<div class="job-detail-row">
 							<span class="job-detail-label">Arbeitszeiten:</span>
-							<span class="working-hours-list">${reviewData.workingHours.map(time => `<div>${time}</div>`).join('')}</span>
+							<span class="working-hours-list">${reviewData.workingHours.map(time => `<div>${escapeHtml(time)}</div>`).join('')}</span>
 						</div>
 						${reviewData.saturdayWork > 0 ? `
 						<div class="job-detail-row">
 							<span class="job-detail-label">Samstagsarbeit:</span>
-							<span class="working-hours-list"><div>${reviewData.saturdayWork}x pro Monat</div>${reviewData.saturdayHours ? reviewData.saturdayHours.map(time => `<div>${time}</div>`).join('') : ''}</span>
+							<span class="working-hours-list"><div>${reviewData.saturdayWork}x pro Monat</div>${reviewData.saturdayHours ? reviewData.saturdayHours.map(time => `<div>${escapeHtml(time)}</div>`).join('') : ''}</span>
 						</div>
 						` : ''}
 					</div>
@@ -7246,7 +7508,7 @@
                         ${reviewData.benefits ? `
                         <div class="comment-item">
                             <div class="comment-label">Benefits:</div>
-                            <div class="comment-text">${reviewData.benefits}</div>
+                            <div class="comment-text">${safeBenefits}</div>
                         </div>
                         ` : ''}
                     </div>
@@ -7265,30 +7527,31 @@
             const salaryBadge = getSalaryBadge(jobData.salary);
             const sortedWorkingHours = sortWorkingHours([...jobData.workingHours]);
             
-            return `
-                <div class="job-card">		
+			return `
+                <div class="job-card" data-earliest-start="${escapeHtml(jobData.earliestStart || '')}">	
                     <div class="job-header">
                         <div class="job-info">
 							<div style="display: flex; align-items: center; gap: 0.5rem;">
 								<div onclick="showCompanyPage('${escapeAttr(jobData.companyName)}')" style="margin: 0; font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 600; cursor: pointer; line-height: 1.4;">${formatNameWithBadge(jobData.companyName, getCompanyVerifiedBadge(jobData.companyName))}</div>
 							</div>
-                            <p>${jobData.address}</p>
+                            <p>${safeAddress}</p>
 							<div class="company-badges" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">
-								<div class="category-badge" style="padding: 0.35rem 1.25rem; margin-top: 0; margin-bottom: 0;">${jobData.category}</div>								
+								<div class="category-badge" style="padding: 0.35rem 1.25rem; margin-top: 0; margin-bottom: 0;">${escapeHtml(jobData.category)}</div>								
                             </div>
-							${jobData.specializations ? `<p>Spezialisierungen: ${jobData.specializations}</p>` : ''}
-							${jobData.area ? `<p>Bereich: ${jobData.area}</p>` : ''}
-							${jobData.customerType ? `<p>Kundschaft: ${jobData.customerType}</p>` : ''}
-                            ${jobData.benefits ? `<p>Benefits: ${jobData.benefits}</p>` : ''}							
+							${safeSpecializations ? `<p>Spezialisierungen: ${safeSpecializations}</p>` : ''}
+							${safeArea ? `<p>Bereich: ${safeArea}</p>` : ''}
+							${safeCustomerType ? `<p>Kundschaft: ${safeCustomerType}</p>` : ''}
+                            ${safeBenefits ? `<p>Benefits: ${safeBenefits}</p>` : ''}						
                         </div>
-						<div style="text-align: center;">
-							<div class="salary-badge ${salaryBadge.class} salary-badge-positioned" title="${salaryBadge.text}" style="font-size: 1rem; font-weight: 500; padding: 0.5rem 1rem;">${jobData.salary}€</div>	
+						<div style="position: absolute; top: 1rem; right: 1rem; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
+							<div class="salary-badge ${salaryBadge.class}" title="${salaryBadge.text}" style="font-size: 1rem; font-weight: 500; padding: 0.5rem 1rem; position: static;">${jobData.salary}€</div>
+							${jobData.earliestStart ? `<div style="font-size: 0.78rem; color: #888; font-family: 'DM Sans', sans-serif; text-align: right; line-height: 1.4;">Frühester Beginn:<br><strong style="color: #555;">${escapeHtml(jobData.earliestStart)}</strong></div>` : ''}
                         </div>
                     </div>
                     
                     <div class="job-description">
                         <div class="comment-label">Stellenbeschreibung:</div>
-                        <div class="comment-text">${jobData.description}</div>
+                        <div class="comment-text">${safeDescription}</div>
                     </div>
                     
                     <div class="job-details">
@@ -7298,7 +7561,7 @@
                         </div>
 						<div class="job-detail-row">
                             <span class="job-detail-label">Arbeitszeiten:</span>
-                            <span class="working-hours-list">${jobData.workingHours.map(time => `<div>${time}</div>`).join('')}</span>
+                            <span class="working-hours-list">${jobData.workingHours.map(time => `<div>${escapeHtml(time)}</div>`).join('')}</span>
                         </div>
                         ${jobData.saturdayWork > 0 ? `
 						<div class="job-detail-row">
@@ -7312,9 +7575,9 @@
 						<div class="comment-item">
 							<div class="comment-label">Bewerbung & Kontakt:</div>
 							<div class="comment-text">
-								<strong>Ansprechperson:</strong> ${jobData.contactPerson}<br>
+								<strong>Ansprechperson:</strong> ${escapeHtml(jobData.contactPerson)}<br>
 								<strong>E-Mail:</strong> <a href="mailto:${escapeHtml(jobData.contactEmail)}" style="color: var(--red);" rel="nofollow">${escapeHtml(jobData.contactEmail).split('').map(c => `&#${c.charCodeAt(0)};`).join('')}</a>
-								${jobData.applicationNotes ? `<br><br>${jobData.applicationNotes}` : ''}
+								${jobData.applicationNotes ? `<br><br>${escapeHtml(jobData.applicationNotes)}` : ''}
 							</div>
 						</div>
 					</div>
@@ -7386,7 +7649,7 @@
             }
             
             if (reviewData.benefits) {
-                html += `<div class="comment-item"><div class="comment-label">Benefits:</div><div class="comment-text">${reviewData.benefits}</div></div>`;
+                html += `<div class="comment-item"><div class="comment-label">Benefits:</div><div class="comment-text">${safeBenefits}</div></div>`;
             }
             
             html += '</div>';
@@ -7495,6 +7758,7 @@
 					if (['Bezahlung über Tarif', 'Angemessenes Gehalt', 'Tarifliches Mindestgehalt', 'Untertarifliche Bezahlung',
 						 'Ausgezeichnet vom BPhD', 'Feste Arbeitszeiten', 'Gleitzeit'].includes(filter)) return;
 					if (filter.startsWith('Im Umkreis von') || filter.startsWith('Bereich: ')) return;
+					if (filter.startsWith('Frühester Beginn:')) return;
 					if (jobCatSpecificFilters.includes(filter)) return;
 
 					const jobText = job.textContent.toLowerCase();
@@ -7588,6 +7852,37 @@
 					if (!isVerified) showJob = false;
 				}
 
+				// Frühester Beginn Filter
+				const startFilter = activeJobAdvancedFilters.find(f => f.startsWith('Frühester Beginn:'));
+				console.log('activeJobAdvancedFilters:', JSON.stringify(activeJobAdvancedFilters));
+				console.log('startFilter:', startFilter);
+				if (startFilter) {
+					const jobStart = job.getAttribute('data-earliest-start') || '';
+					console.log('jobStart from DOM:', jobStart);
+					if (startFilter === 'Frühester Beginn: Flexibel') {
+						if (jobStart.toLowerCase() !== 'flexibel') showJob = false;
+					} else {
+						const match = startFilter.match(/ab (\d{2})\/(\d{4})/);
+						console.log('regex match on filter:', match);
+						if (match) {
+							const filterDate = parseInt(match[2]) * 12 + parseInt(match[1]);
+							if (jobStart && jobStart.toLowerCase() !== 'flexibel') {
+								const startMatch = jobStart.match(/(\d{2})\/(\d{4})/);
+								console.log('regex match on jobStart:', startMatch);
+								if (startMatch) {
+									const jobDate = parseInt(startMatch[2]) * 12 + parseInt(startMatch[1]);
+									console.log('jobDate:', jobDate, 'filterDate:', filterDate, 'showJob bleibt:', jobDate >= filterDate);
+									if (jobDate < filterDate) showJob = false;
+								} else {
+									showJob = false;
+								}
+							} else if (!jobStart) {
+								showJob = false;
+							}
+						}
+					}
+				}
+
 				// Bereich-Filter
 				const jobBereichFilter = activeJobAdvancedFilters.find(f => f.startsWith('Bereich: '));
 				if (jobBereichFilter) {
@@ -7653,8 +7948,29 @@
 					}
 				}
 
+				console.log('display gesetzt auf:', showJob ? 'block' : 'none', '| data-earliest-start:', job.getAttribute('data-earliest-start'));
 				job.style.display = showJob ? 'block' : 'none';
             });
+
+			// Wenn Frühester-Beginn-Filter aktiv: sichtbare Jobs nach Startdatum sortieren
+			const activeStartFilter = activeJobAdvancedFilters.find(f => f.startsWith('Frühester Beginn: ab '));
+			if (activeStartFilter) {
+				const container = document.getElementById('jobs-container');
+				const visibleJobs = Array.from(container.querySelectorAll('.job-card'))
+					.filter(j => j.style.display !== 'none');
+
+				visibleJobs.sort((a, b) => {
+					const getDate = el => {
+						const val = el.getAttribute('data-earliest-start') || '';
+						const m = val.match(/(\d{2})\/(\d{4})/);
+						return m ? parseInt(m[2]) * 12 + parseInt(m[1]) : 999999;
+					};
+					return getDate(a) - getDate(b);
+				});
+
+				// DOM-Reihenfolge neu setzen
+				visibleJobs.forEach(j => container.appendChild(j));
+			}
 
 			// Warte auf alle Radius-Checks parallel
 			if (window.jobRadiusPromises && window.jobRadiusPromises.length > 0) {
@@ -10248,7 +10564,8 @@
 							contactPerson: job.contact_person,
 							contactEmail: job.contact_email,
 							workingHours: formatWorkingHoursForDisplay(job.working_hours_data || []).regular || [],
-							saturdayHours: formatWorkingHoursForDisplay(job.working_hours_data || []).saturday || []
+							saturdayHours: formatWorkingHoursForDisplay(job.working_hours_data || []).saturday || [],
+							earliestStart: job.earliest_start || ''
 						};
 						
 						jobsData.push(formattedJob);
