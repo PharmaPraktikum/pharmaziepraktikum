@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/x-icon" href="./favicon.ico">
-    <link rel="icon" type="image/png" sizes="512x512" href="./favicon-512.png">
+    <link rel="icon" type="image/png" href="./logo.png">
     <link rel="apple-touch-icon" href="./favicon-512.png">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://*.supabase.co; img-src 'self' data: https:;">
@@ -1834,7 +1834,8 @@
     <!-- Header -->
     <div class="header">
         <div class="nav">
-			<div style="display:flex;align-items:center;">
+            <div style="display:flex;align-items:center;">
+                <img src="./logo.png" onclick="showSection('landing')" style="height:36px;width:auto;margin-right:0.4rem;cursor:pointer;" alt="PharmaFaro">
                 <div class="logo" onclick="showSection('landing')" style="cursor: pointer;">PharmaFaro</div>
                 <div class="mode-switcher" id="mode-switcher">
                     <button class="mode-switcher-btn" onclick="toggleModeSwitcher(event)" aria-label="Bereich wechseln" title="Bereich wechseln">
