@@ -838,6 +838,57 @@
     .star-rating { display: flex; gap: 0.25rem; }
     .star-rating .star { font-size: 1.8rem; cursor: pointer; color: var(--border); transition: color 0.15s; line-height: 1; }
     .star-rating .star.filled { color: var(--red); }
+
+        /* ── INFO-ICON (Formular: Sterne-Bewertungen) ── */
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            margin-left: 0.4rem;
+            border-radius: 50%;
+            background: var(--mid);
+            color: #fff;
+            font-size: 0.7rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 1;
+            cursor: help;
+            vertical-align: middle;
+        }
+        .info-icon:hover,
+        .info-icon:focus,
+        .info-icon:active {
+            background: var(--red);
+        }
+
+        /* ── BEWERTUNGSPUNKTE IN DEN CARDS: Hover-Ziel für Tooltip ── */
+        .rating-item[data-tooltip] {
+            cursor: help;
+        }
+
+        /* ── GEMEINSAMES TOOLTIP-ELEMENT (Formular + Cards) ── */
+        .global-tooltip {
+            position: fixed;
+            z-index: 99999;
+            background: var(--dark);
+            color: #fff;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 400;
+            line-height: 1.4;
+            max-width: 220px;
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        }
+        .global-tooltip.visible {
+            opacity: 1;
+        }
     .star-rating .star.hover { color: #7c3aed; }
 
 	.rating-form-group {
@@ -2260,7 +2311,7 @@
                             <h3>Sterne-Bewertungen *</h3>
                             <div class="rating-form-group">
                                 <div class="rating-form-item">
-                                    <label>Betreuung *</label>
+                                    <label>Betreuung<span class="info-icon" tabindex="0" data-tooltip="Gab es eine feste Ansprechperson? War diese stets erreichbar? Wurdest du ausreichend in deinen Aufgaben unterstützt? Hast du regelmäßiges Feedback erhalten?">i</span></label>
                                     <div class="star-rating" data-rating-name="betreuung">
                                         <span class="star" data-rating="1">★</span>
                                         <span class="star" data-rating="2">★</span>
@@ -2270,7 +2321,7 @@
                                     </div>
                                 </div>
                                 <div class="rating-form-item">
-                                    <label>Arbeitsatmosphäre *</label>
+                                    <label>Arbeitsatmosphäre<span class="info-icon" tabindex="0" data-tooltip="Wie war das allgemeine Betriebsklima? Hast du dich wertgeschätzt gefühlt?, Hast du dich auf der Arbeit wohl gefühlt? Bist du gerne zur Arbeit gekommen?">i</span></label>
                                     <div class="star-rating" data-rating-name="atmosphaere">
                                         <span class="star" data-rating="1">★</span>
                                         <span class="star" data-rating="2">★</span>
@@ -2280,7 +2331,7 @@
                                     </div>
                                 </div>
                                 <div class="rating-form-item">
-                                    <label>Team *</label>
+                                    <label>Team<span class="info-icon" tabindex="0" data-tooltip="Wie war der Umgang des Teams miteinander? Waren die Kolleg:innen immer hilfsbereit? Hast du dich direkt als Teil des Teams gefühlt?">i</span></label>
                                     <div class="star-rating" data-rating-name="team">
                                         <span class="star" data-rating="1">★</span>
                                         <span class="star" data-rating="2">★</span>
@@ -2290,7 +2341,7 @@
                                     </div>
                                 </div>
                                 <div class="rating-form-item">
-                                    <label>Arbeitszeiten *</label>
+                                    <label>Arbeitszeiten<span class="info-icon" tabindex="0" data-tooltip="aren die Arbeitszeiten zumutbar? Gab es ausreichend Pausen? Konntest du dich mit ausreichendem zeitlichen Vorlauf auf die vereinbarten Arbeitszeiten verlassen (Planbarkeit)?">i</span></label>
                                     <div class="star-rating" data-rating-name="arbeitszeiten">
                                         <span class="star" data-rating="1">★</span>
                                         <span class="star" data-rating="2">★</span>
@@ -2300,7 +2351,7 @@
                                     </div>
                                 </div>
                                 <div class="rating-form-item">
-                                    <label>Ausbildung *</label>
+                                    <label>Ausbildung<span class="info-icon" tabindex="0" data-tooltip="Wie viel wurde dir fachlich vermittelt und wie abwechslungsreich waren die Aufgaben?">i</span></label>
                                     <div class="star-rating" data-rating-name="ausbildung">
                                         <span class="star" data-rating="1">★</span>
                                         <span class="star" data-rating="2">★</span>
@@ -2310,7 +2361,7 @@
                                     </div>
                                 </div>
                                 <div class="rating-form-item">
-                                    <label>Vorgesetzte *</label>
+                                    <label>Vorgesetzte<span class="info-icon" tabindex="0" data-tooltip="Wie war der Führungsstil und die Wertschätzung durch die/den Vorgesetzte:n?">i</span></label>
                                     <div class="star-rating" data-rating-name="vorgesetzte">
                                         <span class="star" data-rating="1">★</span>
                                         <span class="star" data-rating="2">★</span>
@@ -2320,7 +2371,7 @@
                                     </div>
                                 </div>
                                 <div class="rating-form-item">
-                                    <label>Moderne Ausstattung *</label>
+                                    <label>Moderne Ausstattung<span class="info-icon" tabindex="0" data-tooltip="Wie zeitgemäß waren Räumlichkeiten, Technik und Arbeitsmittel?">i</span></label>
                                     <div class="star-rating" data-rating-name="ausstattung">
                                         <span class="star" data-rating="1">★</span>
                                         <span class="star" data-rating="2">★</span>
@@ -2330,7 +2381,7 @@
                                     </div>
                                 </div>
                                 <div class="rating-form-item">
-                                    <label>Kommunikation *</label>
+                                    <label>Kommunikation<span class="info-icon" tabindex="0" data-tooltip="Wie offen, klar und regelmäßig wurde im Betrieb kommuniziert?">i</span></label>
                                     <div class="star-rating" data-rating-name="kommunikation">
                                         <span class="star" data-rating="1">★</span>
                                         <span class="star" data-rating="2">★</span>
@@ -4565,6 +4616,80 @@
 			}
 		});
 
+        (function() {
+            let tooltipEl = null;
+            let showTimer = null;
+            let hideTimer = null;
+
+            function getTooltipEl() {
+                if (!tooltipEl) {
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.className = 'global-tooltip';
+                    document.body.appendChild(tooltipEl);
+                }
+                return tooltipEl;
+            }
+
+            function positionTooltip(target) {
+                const el = getTooltipEl();
+                const rect = target.getBoundingClientRect();
+                el.style.left = (rect.left + rect.width / 2) + 'px';
+                if (rect.top < 90) {
+                    el.style.top = (rect.bottom + 10) + 'px';
+                    el.style.transform = 'translate(-50%, 0)';
+                } else {
+                    el.style.top = (rect.top - 10) + 'px';
+                    el.style.transform = 'translate(-50%, -100%)';
+                }
+            }
+
+            function showTooltip(target, text, delay) {
+                clearTimeout(hideTimer);
+                clearTimeout(showTimer);
+                showTimer = setTimeout(function() {
+                    const el = getTooltipEl();
+                    el.textContent = text;
+                    positionTooltip(target);
+                    el.classList.add('visible');
+                }, delay || 0);
+            }
+
+            function hideTooltip() {
+                clearTimeout(showTimer);
+                clearTimeout(hideTimer);
+                hideTimer = setTimeout(function() {
+                    getTooltipEl().classList.remove('visible');
+                }, 30);
+            }
+
+            // Formular: i-Icons -> Hover am Desktop, Klick/Tap auf Touchdisplays
+            document.addEventListener('mouseover', function(e) {
+                const icon = e.target.closest('.info-icon');
+                if (icon) showTooltip(icon, icon.dataset.tooltip, 0);
+            });
+            document.addEventListener('mouseout', function(e) {
+                if (e.target.closest('.info-icon')) hideTooltip();
+            });
+            document.addEventListener('click', function(e) {
+                const icon = e.target.closest('.info-icon');
+                if (icon) {
+                    e.stopPropagation();
+                    showTooltip(icon, icon.dataset.tooltip, 0);
+                } else {
+                    hideTooltip();
+                }
+            });
+
+            // Cards: Bewertungspunkte -> Hover mit Verzögerung (stört nicht beim Scrollen)
+            document.addEventListener('mouseover', function(e) {
+                const item = e.target.closest('.rating-item[data-tooltip]');
+                if (item) showTooltip(item, item.dataset.tooltip, 500);
+            });
+            document.addEventListener('mouseout', function(e) {
+                if (e.target.closest('.rating-item[data-tooltip]')) hideTooltip();
+            });
+        })();
+
 		function showJobModal() {
 			document.getElementById('job-specializations-field').style.display = 'none';
 			document.getElementById('job-industry-field').style.display = 'none';
@@ -6630,15 +6755,26 @@
                 'Moderne Ausstattung': 'ausstattung',
                 'Kommunikation': 'kommunikation'
             };
-            
+
+            const categoryDescriptions = {
+                'Betreuung': 'Gab es eine feste Ansprechperson? War diese stets erreichbar? Wurdest du ausreichend in deinen Aufgaben unterstützt? Hast du regelmäßiges Feedback erhalten?',
+                'Arbeitsatmosphäre': 'Wie war das allgemeine Betriebsklima? Hast du dich wertgeschätzt gefühlt?, Hast du dich auf der Arbeit wohl gefühlt? Bist du gerne zur Arbeit gekommen?',
+                'Team': 'Wie war der Umgang des Teams miteinander? Waren die Kolleg:innen immer hilfsbereit? Hast du dich direkt als Teil des Teams gefühlt?',
+                'Arbeitszeiten': 'Waren die Arbeitszeiten zumutbar? Gab es ausreichend Pausen? Konntest du dich mit ausreichendem zeitlichen Vorlauf auf die vereinbarten Arbeitszeiten verlassen (Planbarkeit)?',
+                'Ausbildung': 'Wurdest du angemessen in neue Abläufe eingearbeitet? Wurde sich ausreichend Zeit für die Vermittlung und Erklärung von Inhalten genommen? Wurden konkrete Situationen mit dir geübt? Wurdest du entsprechend deines Kenntnisstandes eingesetzt (also nicht ins kalte Wasser geworfen)?',
+                'Vorgesetzte': 'Gab es eine klar verantwortliche Person? War die vorgesetzte Person in ihren Erwartungen an dich eindeutig und geradlinig (also nicht unklar oder wechselhaft)? Empfandest du den Umgang mit dir als fair und wertschätzend? Hattest du das Gefühl, der vorgesetzten Person deine Gedanken und Sorgen anvertrauen zu können?',
+                'Moderne Ausstattung': 'Hattest du einen eigenen Arbeitsplatz oder einen festen Ort, an dem du in Ruhe deine Arbeiten erledigen konntest? War die technische Ausstattung auf einem modernen Stand? Waren alle, zur Erfüllung deiner Aufgaben benötigten Arbeitsmittel in ausreichender Zahl vorhanden?',
+                'Kommunikation': 'War der Informationsfluss stets transparent? Wurden Informationen rechtzeitig an dich weitergeleitet? Wurden getroffene Absprachen eingehalten?, '
+            };
+
             let html = '<div class="rating-grid">';
-            
+
             Object.keys(categoryMappings).forEach(category => {
                 const key = categoryMappings[category];
                 const rating = ratings[key] || 0;
-                
+
                 html += `
-                    <div class="rating-item">
+                    <div class="rating-item" data-tooltip="${escapeAttr(categoryDescriptions[category])}">
                         <div class="label">${category}</div>
                         <div class="rating-item-stars">
                             ${generateStarHTML(rating)}
