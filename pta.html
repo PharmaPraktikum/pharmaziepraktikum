@@ -856,6 +856,8 @@
             line-height: 1;
             cursor: help;
             vertical-align: middle;
+            position: relative;
+            top: -2px;
         }
         .info-icon:hover,
         .info-icon:focus,
@@ -4672,9 +4674,13 @@
             });
             document.addEventListener('click', function(e) {
                 const icon = e.target.closest('.info-icon');
+                const item = e.target.closest('.rating-item[data-tooltip]');
                 if (icon) {
                     e.stopPropagation();
                     showTooltip(icon, icon.dataset.tooltip, 0);
+                } else if (item) {
+                    e.stopPropagation();
+                    showTooltip(item, item.dataset.tooltip, 0);
                 } else {
                     hideTooltip();
                 }
